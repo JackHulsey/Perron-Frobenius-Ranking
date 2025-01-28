@@ -3,19 +3,24 @@ from build_matrices import build_matrices
 from data_manipulation import generate_data
 import numpy as np
 
-from matrix_math import fixed_point, output, calc_strengths
+from matrix_math import fixed_point, output, linear_strengths, nonlinear_strengths
+from output_matrices import print_matrix
+from ranking import method_one, method_two, method_three
 
-# initalize data
-games, team_games, records = generate_data('1989.txt')
+def main():
+    # initalize data
+    games, team_games, records = generate_data('data/1989.txt', verbose = True)
 
-# build the four matrices we 'need'
-results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix = build_matrices(team_games, records)
+    # build the five matrices we 'need'
+    results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix = build_matrices(team_games, records)
 
-matrices = np.array(weighted_score_matrix)
-ranking, iter, every_rank = fixed_point(matrices, records)
-print(iter)
+    # print_matrix(raw_score_matrix, records)
 
-strengths = calc_strengths(score_matrix, ranking, records)
+    # method_one(weighted_score_matrix, score_matrix, records)
+    print("\n")
+    # method_two(raw_score_matrix, records, True)
 
-output(ranking, strengths, records, 40)
+    method_three(raw_score_matrix, records, True)
 
+if __name__ == '__main__':
+    main()

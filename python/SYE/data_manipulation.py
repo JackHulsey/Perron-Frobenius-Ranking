@@ -87,7 +87,7 @@ def generate_records(team_games):
 
 def filter_teams(games, team_games, records):
     for team in records:
-        if team[4] < 3 or team[1] == 0:
+        if team[4] < 4 or team[1] == 0:
             for game in games:
                 if game in team_games[team[0]]:
                     games.remove(game)
@@ -95,7 +95,7 @@ def filter_teams(games, team_games, records):
             records.remove(team)
     return games, team_games, records
 
-def generate_data(file_path):
+def generate_data(file_path, verbose=False, filter = True):
     # the massive array of all the games tuples
     games = split_rows(file_path)
 
@@ -103,15 +103,17 @@ def generate_data(file_path):
     # Key: team name
     # Value: every tuple of games that they played in
     team_games = generate_dictionary(games)
+
     # an array of teams with tuples of stats
     # (name, wins, losses, ratio, total_games_played, ties)
     records = generate_records(team_games)
-
-    tmp = 0
-    while len(records) != tmp:
-        tmp = len(records)
-        games, team_games, records = filter_teams(games, team_games, records)
-        print(tmp)
+    if filter:
+        tmp = 0
+        while len(records) != tmp:
+            tmp = len(records)
+            games, team_games, records = filter_teams(games, team_games, records)
+        if verbose:
+            print(f"remaining teams post-filter: {tmp}")
     # we have to remake our dictionary based on our shorter games array
     team_games = generate_dictionary(games)
     # print(len(records))

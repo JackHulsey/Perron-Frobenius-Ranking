@@ -1,8 +1,10 @@
 import numpy as np
 
-# Simply returns a 1 or a 0 for win or loss 0.5 for tie
-# a_ij
+# contains the function to calculate the entries for a matrix
+
 def match_result(team_games, team_i, team_j):
+    # Simply returns a 1 or a 0 for win or loss 0.5 for tie
+    # a_ij
     # 0: team_i wins, 1: team_j wins, 0.5: tie
     played = team_games[team_i]
     for game in played:
@@ -16,10 +18,9 @@ def match_result(team_games, team_i, team_j):
         return 0
     return 0
 
-# Returns the same 1, 0, 0.5 but divides it by the number of games that team played
-# a_ij / n_i
 def match_result_weighted(team_games, team_i, team_j, num_game):
-    # 0: team_i wins, 1: team_j wins, 0.5: tie
+    # Returns the same 1, 0, 0.5 but divides it by the number of games that team played
+    # a_ij / n_i
     played = team_games[team_i]
     for game in played:
       if game[4] == team_i and game[6] == team_j:
@@ -32,15 +33,14 @@ def match_result_weighted(team_games, team_i, team_j, num_game):
         return 0
     return 0
 
-# subtracts the loser's score from the winners
 def raw_match_score(team_games, team_i, team_j):
-    # 0: team_i wins, 1: team_j wins, 0.5: tie
+    # score of the team, one team on one half the other on the second half
     played = team_games[team_i]
     for game in played:
       if game[4] == team_i and game[6] == team_j:
-        return game[5] - game[7]
+        return int(game[5])
       if game[4] == team_j and game[6] == team_i:
-        return game[5] - game[7]
+        return int(game[7])
     return 0
 
 # helper functions to make 2.4 in the paper
