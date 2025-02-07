@@ -16,7 +16,7 @@ def frobenius_norm(r):
         sum += (v*v)
     return np.sqrt(sum)
 
-def fixed_point(A, records, eps=1e-1000):
+def fixed_point(A, records, eps=1e-100):
     '''
     Calculate the fixed point integral of a matrix
     :param A: matrix we're integrating
@@ -65,8 +65,16 @@ def linear_strengths(matrix, ranking, records):
         sum = 0
     return strength
 
-def output(ranking, records, limit=100, strength=None):
-    s = np.argsort(-ranking)
+def output(ranking, records, limit=100, strength=None, three=False):
+    if strength:
+        strength = np.array(strength)
+        s = np.argsort(-strength)
+    else:
+        ranking = np.array(ranking)
+        if three:
+            s = np.argsort(ranking)
+        else:
+            s = np.argsort(-ranking)
     iter = 1
     tmp = s[0]
     for num in s:
@@ -75,7 +83,12 @@ def output(ranking, records, limit=100, strength=None):
             print(f"{iter:<3} {records[num][0]:<20} {round(strength[num], 6):<10} {round(strength[tmp] - strength[num], 5)}")
         else:
             # output with records of win-loss-tie
-            print(f"{iter:<3} {records[num][0]:<18} {records[num][1]}-{records[num][2]}-{records[num][5]} {ranking[num]}")
+            if three:
+                diff = ranking[num]-ranking[s[0]]
+            else:
+                diff = ranking[s[0]]-ranking[num]
+            record = str(records[num][1]) + '-' + str(records[num][2]) + '-' + str(records[num][5])
+            print(f"{iter:<3} {records[num][0]:<20} {record:<10} {ranking[num]:<25} {diff}")
         if iter == limit:
             return
         iter += 1
@@ -189,7 +202,6 @@ def inverse_power_method(B, eps=1e-1000):
     # The result is the eigenvector corresponding to the smallest eigenvalue
     return r_0, iter
 
-
 def inverse_power_method_two(B, A0, max_iter=1000, tol=1e-8):
     """
     Inverse Power Method to find the eigenvector corresponding to the smallest eigenvalue
@@ -204,6 +216,7 @@ def inverse_power_method_two(B, A0, max_iter=1000, tol=1e-8):
     Returns:
     - eigvec (ndarray): The eigenvector corresponding to the smallest eigenvalue of B'.
     """
+
     # Define matrix B' = B + A0 * I
     n = B.shape[0]
     B_prime = B + A0 * np.eye(n)
@@ -227,8 +240,9 @@ def inverse_power_method_two(B, A0, max_iter=1000, tol=1e-8):
         eigvec /= eigvec_norm
 
         # Check for convergence (if the change in the eigenvector is small)
-        if np.linalg.norm(np.dot(B_prime, eigvec) - eigvec) < tol:
-            break
+        #if np.linalg.norm(np.dot(B_prime, eigvec) - eigvec) < tol:
+            #break
+        
         iter = _
     # Return the eigenvector corresponding to the smallest eigenvalue
     return eigvec, iter
