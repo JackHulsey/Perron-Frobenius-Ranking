@@ -1,6 +1,10 @@
 # this is where we will calculate the frobenius norm and fixed point integrals
+import math
+from math import log
+
 import numpy as np
 from scipy.linalg import lu, solve
+from scipy.optimize import fsolve
 
 
 # functions used for method 1
@@ -65,35 +69,6 @@ def linear_strengths(matrix, ranking, records):
         sum = 0
     return strength
 
-def output(ranking, records, limit=100, strength=None, three=False):
-    if strength:
-        strength = np.array(strength)
-        s = np.argsort(-strength)
-    else:
-        ranking = np.array(ranking)
-        if three:
-            s = np.argsort(ranking)
-        else:
-            s = np.argsort(-ranking)
-    iter = 1
-    tmp = s[0]
-    for num in s:
-        if strength is not None:
-            # output with strengths
-            print(f"{iter:<3} {records[num][0]:<20} {round(strength[num], 6):<10} {round(strength[tmp] - strength[num], 5)}")
-        else:
-            # output with records of win-loss-tie
-            if three:
-                diff = ranking[num]-ranking[s[0]]
-            else:
-                diff = ranking[s[0]]-ranking[num]
-            record = str(records[num][1]) + '-' + str(records[num][2]) + '-' + str(records[num][5])
-            print(f"{iter:<3} {records[num][0]:<20} {record:<10} {ranking[num]:<25} {diff}")
-        if iter == limit:
-            return
-        iter += 1
-        tmp = num
-
 # functions needed for method 2
 
 # 3.4 in the paper
@@ -146,10 +121,8 @@ def nonlinear_strengths(matrix, records):
     # returns ranking vector, number of iterations, and array of all ranking vectors
     return r, n, all_ranks
 
-# functions needed for method 3
 
-def pi_ij(s1, s2):
-    return s1 / (s1 + s2)
+# functions needed for method 3
 
 def diagonal_entries(i, matrix, n):
     total = 0
@@ -246,3 +219,50 @@ def inverse_power_method_two(B, A0, max_iter=1000, tol=1e-8):
         iter = _
     # Return the eigenvector corresponding to the smallest eigenvalue
     return eigvec, iter
+
+# TODO: implement method 3
+
+def pi_ij(s1, s2):
+    # 5.2
+    return s1 / (s1 + s2)
+
+def bradley_terry(a, records):
+    r = np.ones(len(records))
+    for i in range(len(records)):
+        for j in range(i, len(records)):
+            x = math.pow((r[i] / r[i] + r[j]), a[i][j])
+            y = math.pow((r[i] / r[i] + r[j]), a[j][i])
+            r[i] *= x*y
+
+def bradley_terry_alternate(a, records):
+    r = [0] * len(records)
+    r_0 = r
+    for i in range(len(records)):
+        for j in range(i, len(records)):
+            r_0[i] = (a[i][j](log(r[i] - log(r[i] - r[j]))) + a[i][j](log(r[i] - log(r[i] - r[j]))))
+            r_0[i] = math.exp(r_0[i]) # removes the natural log
+
+    if np.allclose(r_0, r, 1e-1000):
+        return r_0
+
+
+def alpha(matrix, k):
+    """Computes the sum of column k in the matrix."""
+    return sum(matrix[j][k] for j in range(len(matrix)))
+
+def func(r_k, matrix, r, k):
+    """Defines the function to be solved for r_k."""
+    total = alpha(matrix, k) / r_k
+    for j in range(len(matrix)):
+        total -= ((matrix[j][k] + matrix[k][j]) / (r[j] + r_k))
+    return total
+
+def solver(matrix):
+    """Solves for r using fsolve for each element iteratively."""
+    r = np.ones(len(matrix))  # Initialize r as an array
+    for i in range(len(matrix)):
+        r[i] = fsolve(func, r[i], args=(matrix, r, i))[0]  # Extract root from fsolve output
+    return r
+
+
+

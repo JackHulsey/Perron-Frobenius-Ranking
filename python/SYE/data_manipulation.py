@@ -12,26 +12,40 @@ def remove_ranking(team_name):
     team_name = team_name.replace(' ', '')
     return team_name
 
-def parse_game_data(game_str):
+def parse_game_data(game_str, extra_time):
     # Strip the string to remove any trailing commas or spaces
-    game_str = game_str.strip()
 
+    game_str = game_str.replace('"', "")
+    game_str = game_str.replace('&nbsp', '')
+    game_str = game_str.strip()
     # Split the string by commas
     data_fields = game_str.split(',')
 
     # Convert the resulting list into a tuple
     game_tuple = tuple(data_fields)
+    if game_tuple[0] == 'Rk' or game_tuple[0] == '' or game_tuple[11] == 'Game Cancelled':
+        return None
+    if extra_time:
+        game_tuple = (game_tuple[0], game_tuple[1], game_tuple[2], game_tuple[3],
+                    game_tuple[5], game_tuple[6], game_tuple[7], game_tuple[8],
+                      game_tuple[9], game_tuple[10], game_tuple[11])
 
-    win_team = remove_ranking(game_tuple[4])
-    lose_team = remove_ranking(game_tuple[7])
+    win_team = remove_ranking(game_tuple[5])
+    lose_team = remove_ranking(game_tuple[8])
 
-    final = (game_tuple[0], game_tuple[1], game_tuple[2], game_tuple[3], win_team,
-                  game_tuple[5], lose_team, game_tuple[8], game_tuple[9])
-
+    final = (game_tuple[0], game_tuple[1], game_tuple[3], game_tuple[4], win_team,
+                  game_tuple[6], lose_team, game_tuple[9])
+    print(final)
     return final
 
 def split_rows(file_path):
-  # Split the rows by newline
+    'data/{year}.txt'
+    year = int(file_path[5:9])
+    extra_time = False
+    if year > 2012:
+        extra_time = True
+
+    # Split the rows by newline
     with open(file_path, 'r') as data:
         rows = data.read().strip().split("\n")
     # Create a list to hold all game data as tuples
@@ -40,8 +54,9 @@ def split_rows(file_path):
     # Loop through each row
     for row in rows:
         # Split each row by commas
-         data = parse_game_data(row)
-         games.append(data)
+        data = parse_game_data(row, extra_time)
+        if data is not None:
+            games.append(data)
     return games
 
 def generate_dictionary(games):
