@@ -23,7 +23,7 @@ def parse_game_data(game_str, extra_time):
 
     # Convert the resulting list into a tuple
     game_tuple = tuple(data_fields)
-    if game_tuple[0] == 'Rk' or game_tuple[0] == '' or game_tuple[11] == 'Game Cancelled':
+    if game_tuple[0] == 'Rk' or game_tuple[0] == '' or game_tuple[-1] == 'Game Cancelled':
         return None
     if extra_time:
         game_tuple = (game_tuple[0], game_tuple[1], game_tuple[2], game_tuple[3],
@@ -32,10 +32,10 @@ def parse_game_data(game_str, extra_time):
 
     win_team = remove_ranking(game_tuple[5])
     lose_team = remove_ranking(game_tuple[8])
+    year_stripped = game_tuple[3][1:]
 
-    final = (game_tuple[0], game_tuple[1], game_tuple[3], game_tuple[4], win_team,
+    final = (game_tuple[0], game_tuple[1], year_stripped, game_tuple[4], win_team,
                   game_tuple[6], lose_team, game_tuple[9])
-    print(final)
     return final
 
 def split_rows(file_path):

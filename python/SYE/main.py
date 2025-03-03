@@ -3,9 +3,7 @@ import os
 
 from build_matrices import build_matrices
 from data_manipulation import generate_data
-import numpy as np
 
-from output_matrices import print_matrix
 from ranking import method_one, method_two, method_three, method_four
 from scraping import scrape_cfb_schedule
 
@@ -24,14 +22,14 @@ def main():
     # build the five matrices we 'need'
     results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix, A_matrix = build_matrices(team_games, records)
 
-    print_matrix(raw_score_matrix, records)
-    print("")
+    # print_matrix(raw_score_matrix, records)
+    print("\nMethod one: simple linear method using fixed point integrals to determine eigenvectors:")
     method_one(weighted_score_matrix, score_matrix, records, True)
-    print("\n")
+    print("\n\nMethod two: non-linear method using using strength of schedule")
     method_two(results_matrix, raw_score_matrix, score_matrix, records, True)
-    print("\n")
+    print("\n\nMethod three: probabilistic approach of approximating pi_ij as the probability of i beating j")
     method_three(raw_score_matrix, score_matrix, records, True)
-
+    print("\n\nMethod four: the maximum likelihood method (Bradley-Terry model)")
     method_four(A_matrix, records)
 
 if __name__ == '__main__':
