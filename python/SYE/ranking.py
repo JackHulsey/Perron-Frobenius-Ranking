@@ -1,7 +1,8 @@
 import numpy as np
 
 from matrix_math import fixed_point, linear_strengths, nonlinear_strengths, \
-    inverse_power_method, make_B_matrix, inverse_power_method_two, solver
+    inverse_power_method, make_B_matrix, inverse_power_method_two, solver, solver2, solver3
+
 
 def output(ranking, records, limit=100, strength=None, three=False):
     if strength:
@@ -60,8 +61,8 @@ def method_three(raw_score_matrix, score_matrix, records, verbose = False):
     output(ranking, records, 40, three=True)
 
 def method_four(A_matrix, records):
-    ranking = solver(A_matrix)
-    output(ranking, records)
+    ranking = solver3(A_matrix)
+    output(ranking, records, three=True, limit=40)
 
 
 

@@ -1,5 +1,5 @@
 # main file for actually running the program
-import os
+from os import path
 
 from build_matrices import build_matrices
 from data_manipulation import generate_data
@@ -13,24 +13,26 @@ def main():
     year = int(input("Enter year: "))
 
     # Check if the file already exists
-    if not os.path.exists(f"data/{year}.txt"):
-        scrape_cfb_schedule(year)
+    if not path.exists(f"data/{year}.txt"):
+        success = scrape_cfb_schedule(year)
+    else:
+        success = True
 
-    # scrape_cfb_schedule(year)
-    games, team_games, records = generate_data(f'data/{year}.txt')
+    if success:
+        games, team_games, records = generate_data(f'data/{year}.txt')
 
-    # build the five matrices we 'need'
-    results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix, A_matrix = build_matrices(team_games, records)
+        # build the five matrices we 'need'
+        results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix, A_matrix = build_matrices(team_games, records)
 
-    # print_matrix(raw_score_matrix, records)
-    print("\nMethod one: simple linear method using fixed point integrals to determine eigenvectors:")
-    method_one(weighted_score_matrix, score_matrix, records, True)
-    print("\n\nMethod two: non-linear method using using strength of schedule")
-    method_two(results_matrix, raw_score_matrix, score_matrix, records, True)
-    print("\n\nMethod three: probabilistic approach of approximating pi_ij as the probability of i beating j")
-    method_three(raw_score_matrix, score_matrix, records, True)
-    print("\n\nMethod four: the maximum likelihood method (Bradley-Terry model)")
-    method_four(A_matrix, records)
+        # print_matrix(raw_score_matrix, records)
+        print("\nMethod one: simple linear method using fixed point integrals to determine eigenvectors:")
+        method_one(weighted_score_matrix, score_matrix, records, True)
+        print("\n\nMethod two: non-linear method using using strength of schedule")
+        method_two(results_matrix, raw_score_matrix, score_matrix, records, True)
+        print("\n\nMethod three: probabilistic approach of approximating pi_ij as the probability of i beating j")
+        method_three(raw_score_matrix, score_matrix, records, True)
+        print("\n\nMethod four: the maximum likelihood method (Bradley-Terry model)")
+        method_four(A_matrix, records)
 
 if __name__ == '__main__':
     main()

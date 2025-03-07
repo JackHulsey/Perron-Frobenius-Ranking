@@ -26,16 +26,13 @@ def parse_game_data(game_str, extra_time):
     if game_tuple[0] == 'Rk' or game_tuple[0] == '' or game_tuple[-1] == 'Game Cancelled':
         return None
     if extra_time:
-        game_tuple = (game_tuple[0], game_tuple[1], game_tuple[2], game_tuple[3],
-                    game_tuple[5], game_tuple[6], game_tuple[7], game_tuple[8],
-                      game_tuple[9], game_tuple[10], game_tuple[11])
+        game_tuple = (game_tuple[6], game_tuple[7], game_tuple[9], game_tuple[10])
+    else:
+        game_tuple = (game_tuple[5], game_tuple[6], game_tuple[8], game_tuple[9])
+    win_team = remove_ranking(game_tuple[0])
+    lose_team = remove_ranking(game_tuple[2])
 
-    win_team = remove_ranking(game_tuple[5])
-    lose_team = remove_ranking(game_tuple[8])
-    year_stripped = game_tuple[3][1:]
-
-    final = (game_tuple[0], game_tuple[1], year_stripped, game_tuple[4], win_team,
-                  game_tuple[6], lose_team, game_tuple[9])
+    final = (win_team, game_tuple[1], lose_team, game_tuple[3])
     return final
 
 def split_rows(file_path):
@@ -66,8 +63,8 @@ def generate_dictionary(games):
     # Iterate over each game
     for game in games:
         # Extract the team (fifth field) and the game tuple
-        winner = game[4]
-        loser = game[6]
+        winner = game[0]
+        loser = game[2]
 
         # If the team is not in the dictionary, initialize a new list
         if winner not in team_games:
@@ -88,9 +85,9 @@ def generate_records(team_games):
         losses = 0
         ties = 0
         for time in matches:
-            if (time[4] == team or time[6] == team) and time[5] == time[7]:
+            if (time[0] == team or time[2] == team) and time[1] == time[3]:
                 ties += 1
-            elif time[4] == team:
+            elif time[0] == team:
                 wins += 1
             else:
                 losses += 1

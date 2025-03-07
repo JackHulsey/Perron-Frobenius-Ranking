@@ -11,14 +11,14 @@ def scrape_cfb_schedule(year):
 
     if response.status_code != 200:
         print(f"Failed to retrieve data for {year}. Check the URL or try again later.")
-        return
+        return None
 
     soup = BeautifulSoup(response.text, "html.parser")
     table = soup.find("table", {"id": "schedule"})
 
     if not table:
         print(f"No schedule table found for {year}. The structure of the website may have changed.")
-        return
+        return None
 
     # Extract headers
     headers = [th.text.strip() for th in table.find("thead").find_all("th")]
@@ -38,3 +38,4 @@ def scrape_cfb_schedule(year):
     csv_filename = f"data/{year}.txt"
     df.to_csv(csv_filename, index=False, header=False)
     print(f"Data for {year} saved as {csv_filename}")
+    return True

@@ -3,6 +3,7 @@ import math
 from math import log
 
 import numpy as np
+from scipy.integrate import solve_ivp
 from scipy.linalg import lu, solve
 from scipy.optimize import fsolve
 
@@ -222,30 +223,6 @@ def inverse_power_method_two(B, A0, max_iter=1000, tol=1e-8):
 
 # TODO: implement method 3
 
-def pi_ij(s1, s2):
-    # 5.2
-    return s1 / (s1 + s2)
-
-def bradley_terry(a, records):
-    r = np.ones(len(records))
-    for i in range(len(records)):
-        for j in range(i, len(records)):
-            x = math.pow((r[i] / r[i] + r[j]), a[i][j])
-            y = math.pow((r[i] / r[i] + r[j]), a[j][i])
-            r[i] *= x*y
-
-def bradley_terry_alternate(a, records):
-    r = [0] * len(records)
-    r_0 = r
-    for i in range(len(records)):
-        for j in range(i, len(records)):
-            r_0[i] = (a[i][j](log(r[i] - log(r[i] - r[j]))) + a[i][j](log(r[i] - log(r[i] - r[j]))))
-            r_0[i] = math.exp(r_0[i]) # removes the natural log
-
-    if np.allclose(r_0, r, 1e-1000):
-        return r_0
-
-
 def alpha(matrix, k):
     """Computes the sum of column k in the matrix."""
     return sum(matrix[j][k] for j in range(len(matrix)))
@@ -261,8 +238,36 @@ def solver(matrix):
     """Solves for r using fsolve for each element iteratively."""
     r = np.ones(len(matrix))  # Initialize r as an array
     for i in range(len(matrix)):
+        print(fsolve(func, r[i], args=(matrix, r, i)))
         r[i] = fsolve(func, r[i], args=(matrix, r, i))[0]  # Extract root from fsolve output
     return r
 
+def func2(r, matrix):
+    res = np.zeros(len(matrix))
+    for k, r_k in enumerate(r):
+        res[k] = (func(r_k, matrix, r, k))
+    return res
+
+
+def solver2(matrix):
+    r = [0.5] * len(matrix)
+    r = np.array(r)
+    tmp, info, _, _ = fsolve(func2, r, args=(matrix), full_output=True)
+    print(info)
+    return tmp
+
+# 5.9
+def system(t, r, matrix, _):
+    return func2(r, matrix)
+
+def solver3(matrix):
+    r = np.ones(len(matrix))
+    t_span = (0, 10)
+    t_eval = np.linspace(t_span[0], t_span[1], 1000)
+    solution = solve_ivp(system, t_span, r, t_eval=t_eval, args=((matrix, 0)))
+    ranking = []
+    for i in range(len(matrix)):
+        ranking.append(solution.y[i][-1])
+    return ranking
 
 
