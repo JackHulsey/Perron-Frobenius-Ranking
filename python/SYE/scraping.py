@@ -39,3 +39,36 @@ def scrape_cfb_schedule(year):
     df.to_csv(csv_filename, index=False, header=False)
     print(f"Data for {year} saved as {csv_filename}")
     return True
+
+def get_college_football_rankings(year, records):
+    url = f"https://www.espn.com/college-football/rankings/_/poll/1/year/{year}"
+    headers = {"User-Agent": "Mozilla/5.0"}  # Prevent potential blocking
+    response = requests.get(url, headers=headers)
+
+    if response.status_code != 200:
+        print("Failed to retrieve data.")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    rankings = []
+
+    # Find ranking table
+    rows = soup.select(".Table__TBODY tr")
+
+    for row in rows:
+        team = row.select_one("span.hide-mobile") # More accurate selector for team names
+        if team:
+            rankings.append(team.text.strip().replace(' ', ''))
+
+
+
+    ranking_indices = []
+    for team in rankings:
+        for i in range(len(records)):
+            if team == records[i][0]:
+                ranking_indices.append(i)
+                break
+            if i == len(records) - 1:
+                print(team)
+    print(ranking_indices)
+    return rankings, ranking_indices

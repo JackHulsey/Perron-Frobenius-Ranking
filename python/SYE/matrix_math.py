@@ -3,6 +3,7 @@ import math
 from math import log
 
 import numpy as np
+import scipy
 from scipy.integrate import solve_ivp
 from scipy.linalg import lu, solve
 from scipy.optimize import fsolve
@@ -269,5 +270,19 @@ def solver3(matrix):
     for i in range(len(matrix)):
         ranking.append(solution.y[i][-1])
     return ranking
+
+def tournament(matrix):
+    r = np.ones(len(matrix))
+    matrix = np.array(matrix)
+    for _ in range(100):
+        r = r @ matrix
+        r /= np.linalg.norm(r)
+    return r
+
+def modern(matrix):
+    eig_value, eig_vector = scipy.linalg.eig(matrix)
+    principal_value_index = np.argmax(np.abs(eig_value)) # max of the absolute eigenvalue
+    principal_vector = eig_vector[:, principal_value_index]
+    return principal_vector / np.linalg.norm(principal_vector) # normalize it
 
 

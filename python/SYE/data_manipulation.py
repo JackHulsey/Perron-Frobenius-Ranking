@@ -32,6 +32,14 @@ def parse_game_data(game_str, extra_time):
     win_team = remove_ranking(game_tuple[0])
     lose_team = remove_ranking(game_tuple[2])
 
+    mislabeled = {'Mississippi':'OleMiss', 'BrighamYoung':'BYU', 'MiamiFL':'Miami', 'SouthernMethodist':'SMU', 'LouisianaState':'LSU',
+                  'NorthCarolina':'NCState', 'SouthernCalifornia':'USC', 'TexasChristian':'TCU', 'CentralFlorida':'UCF'}
+
+    if win_team in mislabeled.keys():
+        win_team = mislabeled[win_team]
+    if lose_team in mislabeled.keys():
+        lose_team = mislabeled[lose_team]
+
     final = (win_team, game_tuple[1], lose_team, game_tuple[3])
     return final
 

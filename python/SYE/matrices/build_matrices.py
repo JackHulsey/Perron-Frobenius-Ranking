@@ -1,6 +1,6 @@
-from calculate_entries import (match_result_weighted,
-                               weight_match_score, match_score,
-                               match_result, raw_match_score, binary_result, proportions)
+from matrices.calculate_entries import (match_result_weighted,
+                                        weight_match_score, match_score,
+                                        match_result, raw_match_score, proportions)
 
 
 def make_results_matrix(team_games, records):
