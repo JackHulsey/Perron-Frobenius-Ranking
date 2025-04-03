@@ -26,60 +26,57 @@ def kendall_tau(rank1, rank2):
 
 def dcg_at_k(ranking, relevance_scores, k):
     """
-    Calculate Discounted Cumulative Gain at rank k for a given ranking and relevance scores.
-
-    ranking: List of indices representing the ranking.
-    relevance_scores: List of relevance scores corresponding to the items in the ranking.
-    k: Rank at which to calculate DCG.
-
-    Returns the DCG value.
+    Computes the Discounted Cumulative Gain (DCG) at rank k.
+    ranking: A list of ranked teams (team names or IDs).
+    relevance_scores: A list of relevance scores corresponding to each team.
+    k: The number of top ranks to consider for the DCG.
     """
     dcg = 0
-    for i in range(min(k, len(ranking))):
-        rank_pos = ranking[i]  # Item at the i-th position
-        dcg += relevance_scores[rank_pos] / np.log2(i + 2)  # +2 because we want log(i+1) with i starting at 0
+    for i in range(k):
+        relevance = relevance_scores[i]  # Get relevance score for this team
+        dcg += relevance / np.log2(i + 2)  # +2 for log(i+1) starting from i=0
     return dcg
 
+def ndcg(r_ap, ranking):  # Convert AP rankings to numpy array
+    total = 0
 
-def ndcg_at_k(ranking, relevance_scores, ideal_ranking, ideal_relevance_scores, k):
-    """
-    Calculate Normalized Discounted Cumulative Gain at rank k.
+    for r in range(len(ranking)):
+        # Find the relevance score (higher ranks get higher scores)
+        indices = r_ap.index(ranking[r]) if ranking[r] in r_ap else len(r_ap)
+        relevance = len(r_ap) - indices
 
-    ranking: List of indices representing the ranking to evaluate.
-    relevance_scores: List of relevance scores corresponding to the items in the ranking.
-    ideal_ranking: List of indices representing the ideal ranking.
-    ideal_relevance_scores: List of relevance scores corresponding to the ideal ranking.
-    k: Rank at which to calculate NDCG.
+        # Apply logarithmic discounting (except for rank 0)
+        if r > 0:
+            relevance /= np.log2(r + 1)
 
-    Returns the NDCG value.
-    """
-    dcg = dcg_at_k(ranking, relevance_scores, k)
-    idcg = dcg_at_k(ideal_ranking, ideal_relevance_scores, k)
-    return dcg / idcg if idcg != 0 else 0
+        total += relevance
+
+    return total
 
 
-def compare_rankings(ranking1, ranking2):
-    """
-    Compare two rankings using NDCG, where relevance scores are based on rank positions.
+def compare_rankings(r_ap, rankings):
+    ideal = ndcg(r_ap, r_ap)  # Ideal NCTG score (when ranking is perfect)
+    ndcg_scores = [ndcg(r_ap, r) / ideal for r in rankings]
 
-    ranking1: First ranking to evaluate.
-    ranking2: Second ranking to evaluate.
-    num_items: Total number of items (for generating relevance scores).
-    k: Rank at which to calculate NDCG.
+    return ideal, ndcg_scores
 
-    Returns the NDCG values for both rankings.
-    """
-    num_items = len(ranking1)
-    k = num_items
-    # Relevance scores based on rank positions: lower rank means higher relevance
-    relevance_scores = np.array([1 / (i + 1) for i in range(num_items)])  # Exponential decay, e.g. 1, 0.5, 0.33, ...
+def helper(ranking, records, team_games):
+    team_names = {records[ranking[j]][0]: j for j in range(len(ranking))}
+    upsets = 0
+    upsets_ratio = 0
+    weighted_count = 0
 
-    # Ideal ranking is the ranking of the items based on the true relevance scores (highest relevance first)
-    ideal_ranking = sorted(range(len(relevance_scores)), key=lambda x: relevance_scores[x], reverse=True)
-    ideal_relevance_scores = [relevance_scores[i] for i in ideal_ranking]
+    for team in team_games:
+        for game in team_games[team]:
+            if team == game[2] and team_names[game[0]] > team_names[game[2]]:
+                upsets += 1
+                upsets_ratio += ((team_names[game[0]] + 1) / (team_names[game[2]] + 1))
+                weighted_count += 1 / (team_names[game[2]] + 1)
 
-    # Calculate NDCG for both rankings
-    ndcg1 = ndcg_at_k(ranking1, relevance_scores, ideal_ranking, ideal_relevance_scores, k)
-    ndcg2 = ndcg_at_k(ranking2, relevance_scores, ideal_ranking, ideal_relevance_scores, k)
+    return [upsets, upsets_ratio, weighted_count]
 
-    return ndcg1, ndcg2
+def upsets(rankings, records, team_games):
+    upsets = [0] * len(rankings)
+    for r in range(len(rankings)):
+        upsets[r] = helper(rankings[r], records, team_games)
+    return upsets

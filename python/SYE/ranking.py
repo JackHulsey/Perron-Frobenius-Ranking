@@ -37,18 +37,20 @@ def method_one(weighted_score_matrix, score_matrix, records, verbose = False):
     matrices = np.array(weighted_score_matrix)
     ranking, iter, every_rank = fixed_point(matrices, records)
     if verbose:
+        print("\nMethod one: simple linear method using fixed point integrals to determine eigenvectors:")
         print(f"Iterations of fixed point integral: {iter}")
         strengths = linear_strengths(score_matrix, ranking, records)
-        output(ranking, records, strength=strengths)
-    return ranking
+        output(ranking, records, limit=len(records), strength=strengths)
+    return np.argsort(np.array(-ranking))
 
 def method_two(results_matrix, raw_score_matrix, score_matrix, records, verbose = False):
     ranking, iter, every_rank = nonlinear_strengths(raw_score_matrix, records)
     ranking = np.array(ranking)
     if verbose:
+        print("\n\nMethod two: non-linear method using using strength of schedule")
         print(f"iterations of function F: {iter}")
         output(ranking, records, 40)
-    return ranking
+    return np.argsort(-np.array(ranking))
 
 def method_three(raw_score_matrix, score_matrix, records, verbose = False):
     B = make_B_matrix(records, raw_score_matrix)
@@ -56,50 +58,51 @@ def method_three(raw_score_matrix, score_matrix, records, verbose = False):
 
     ranking, iter = inverse_power_method(B)
     if verbose:
+        print("\n\nMethod three: probabilistic approach of approximating pi_ij as the probability of i beating j")
         print(f"iterations of F: {iter}")
         #strengths = linear_strengths(score_matrix, ranking, records)
         output(ranking, records, 40, reverse=True)
-    return ranking
+    return np.argsort(np.array(ranking))
 
 def method_four(A_matrix, records, verbose=False):
     ranking = solver3(A_matrix)
     if verbose:
+        print("\n\nMethod four: the maximum likelihood method (Bradley-Terry model)")
         output(ranking, records, reverse=True, limit=40)
-    return ranking
+    return np.argsort(np.array(ranking))
 
 def method_five(raw_matrix, records, verbose=False):
     ranking = tournament(raw_matrix)
     if verbose:
+        print("\n\nMethod five: a graph theory perspective using tournaments")
         output(ranking, records, reverse=True, limit=40)
-    return ranking
+    return np.argsort(np.array(ranking))
 
 def method_six(matrix, records, verbose=False):
     ranking = modern(matrix)
     if verbose:
-        output(ranking, records, limit=40, reverse=True)
+        print("\n\nMethod six: taking a modern approach with scipy.linalg.eig")
+        output(ranking, records, limit=len(records), reverse=True)
+    # TODO: fix this so that the ranking outputs reversed when it needs to be
+    ranking = np.argsort(np.array(ranking))
+    if records[ranking[0]][1] < records[ranking[-1]][1]:
+        print(records[ranking[0]])
+        return ranking[::-1]
     return ranking
 
-def convert(ranking, records, reverse=False):
-    ranking = np.array(ranking)
-    if reverse:
-        r = np.argsort(ranking)
-    else:
-        r = np.argsort(-ranking)
+def convert(r, records):
     team_rankings = []
     for num in r:
-        if records[num][0] == "SouthernCalifornia":
-            team_rankings.append("USC")
-        else:
-            team_rankings.append(records[num][0])
+        team_rankings.append(records[num][0])
     return team_rankings
 
 def comparison(r_1, r_2, r_3, r_4, r_5, r_6, r_ap, records):
     r_1 = convert(r_1, records)
     r_2 = convert(r_2, records)
-    r_3 = convert(r_3, records, reverse=True)
-    r_4 = convert(r_4, records, reverse=True)
-    r_5 = convert(r_5, records, reverse=True)
-    r_6 = convert(r_6, records, reverse=True)
+    r_3 = convert(r_3, records)
+    r_4 = convert(r_4, records)
+    r_5 = convert(r_5, records)
+    r_6 = convert(r_6, records)
     for i in range(len(r_ap)):
         print(f"{i+1:<4}: ap: {r_ap[i]:<15} 1: {r_1[i]:<15} 2: {r_2[i]:<15} 3: {r_3[i]:<15} 4: {r_4[i]:<15} 5: {r_5[i]:<15} 6: {r_6[i]:<15}")
 

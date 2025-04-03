@@ -22,7 +22,7 @@ def frobenius_norm(r):
         sum += (v*v)
     return np.sqrt(sum)
 
-def fixed_point(A, records, eps=1e-100):
+def fixed_point(A, records, eps=1e-8):
     '''
     Calculate the fixed point integral of a matrix
     :param A: matrix we're integrating
@@ -274,7 +274,7 @@ def solver3(matrix):
 def tournament(matrix):
     r = np.ones(len(matrix))
     matrix = np.array(matrix)
-    for _ in range(100):
+    for _ in range(700):
         r = r @ matrix
         r /= np.linalg.norm(r)
     return r

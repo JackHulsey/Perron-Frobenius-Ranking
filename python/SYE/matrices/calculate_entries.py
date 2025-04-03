@@ -95,9 +95,11 @@ def binary_result(team_games, team_i, team_j):
 def proportions(team_games, team_i, team_j):
     played = team_games[team_i]
     for game in played:
-      if game[0] == team_i and game[2] == team_j:
-        return int(game[1]) / (int(game[1]) + int(game[3]))
-      if game[0] == team_j and game[2] == team_i:
-        return int(game[3]) / (int(game[3]) + int(game[1]))
+        if game[1] == '0' and game[3] == '0':
+            return 0
+        if game[0] == team_i and game[2] == team_j:
+            return int(game[1]) / (int(game[1]) + int(game[3]))
+        if game[0] == team_j and game[2] == team_i:
+            return int(game[3]) / (int(game[3]) + int(game[1]))
     return 0
 

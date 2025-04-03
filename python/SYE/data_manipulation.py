@@ -32,8 +32,9 @@ def parse_game_data(game_str, extra_time):
     win_team = remove_ranking(game_tuple[0])
     lose_team = remove_ranking(game_tuple[2])
 
-    mislabeled = {'Mississippi':'OleMiss', 'BrighamYoung':'BYU', 'MiamiFL':'Miami', 'SouthernMethodist':'SMU', 'LouisianaState':'LSU',
-                  'NorthCarolina':'NCState', 'SouthernCalifornia':'USC', 'TexasChristian':'TCU', 'CentralFlorida':'UCF'}
+    mislabeled = {'BrighamYoung':'BYU', 'MiamiFL':'Miami', 'SouthernMethodist':'SMU', 'LouisianaState':'LSU',
+                  'NorthCarolinaState':'NCState', 'SouthernCalifornia':'USC', 'TexasChristian':'TCU', 'CentralFlorida':'UCF',
+                  'Nevada-LasVegas':'UNLV', 'SouthernMississippi':'SouthernMiss'}
 
     if win_team in mislabeled.keys():
         win_team = mislabeled[win_team]
@@ -72,18 +73,18 @@ def generate_dictionary(games):
     for game in games:
         # Extract the team (fifth field) and the game tuple
         winner = game[0]
+
         loser = game[2]
 
         # If the team is not in the dictionary, initialize a new list
         if winner not in team_games:
+
             team_games[winner] = []
         if loser not in team_games:
             team_games[loser] = []
-
         # Add the current game to the team's list
         team_games[winner].append(game)
         team_games[loser].append(game)
-
     return team_games
 
 def generate_records(team_games):
@@ -106,13 +107,18 @@ def generate_records(team_games):
     return records
 
 def filter_teams(games, team_games, records):
-    for team in records:
-        if team[4] < 4 or team[1] == 0:
-            for game in games:
-                if game in team_games[team[0]]:
-                    games.remove(game)
-            del team_games[team[0]]
-            records.remove(team)
+    tmp = 0
+    while tmp != len(records):
+        tmp = len(records)
+        for team in records:
+            if team[4] < 4 or team[1] == 0:
+                for game in games:
+                    if game in team_games[team[0]]:
+                        games.remove(game)
+                del team_games[team[0]]
+                records.remove(team)
+        team_games = generate_dictionary(games)
+        records = generate_records(team_games)
     return games, team_games, records
 
 def generate_data(file_path, verbose=False, filter = True):

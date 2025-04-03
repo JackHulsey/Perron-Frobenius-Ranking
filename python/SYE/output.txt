@@ -1,0 +1,361 @@
+C:\Users\jackr\repos\CS374\.venv\Scripts\python.exe C:\Users\jackr\repos\SYE\python\SYE\main.py
+Evaluations from 1980:
+Miami what
+['EasternMichigan', 1, 8, 0.1111111111111111, 9, 0]
+1980 | Method_1: | ndcg: 0.84086 |  number of upsets: 144  | ratio: 265.2667  | inversions: 67
+1980 | Method_2: | ndcg: 0.87339 |  number of upsets: 143  | ratio: 251.0877  | inversions: 58
+1980 | Method_3: | ndcg: 0.74359 |  number of upsets: 172  | ratio: 338.1408  | inversions: 67
+1980 | Method_4: | ndcg: 0.9212  |  number of upsets: 138  | ratio: 247.0206  | inversions: 70
+1980 | Method_5: | ndcg: 0.19388 |  number of upsets: 236  | ratio: 427.4415  | inversions: 4
+1980 | Method_6: | ndcg: 0.84086 |  number of upsets: 144  | ratio: 265.2667  | inversions: 67
+Evaluations from 1981:
+['Columbia', 1, 8, 0.1111111111111111, 9, 0]
+1981 | Method_1: | ndcg: 0.79043 |  number of upsets: 146  | ratio: 283.3378  | inversions: 83
+1981 | Method_2: | ndcg: 0.90308 |  number of upsets: 163  | ratio: 292.4995  | inversions: 60
+1981 | Method_3: | ndcg: 0.41513 |  number of upsets: 211  | ratio: 624.7072  | inversions: 26
+1981 | Method_4: | ndcg: 0.90221 |  number of upsets: 153  | ratio: 264.8487  | inversions: 63
+1981 | Method_5: | ndcg: 0.09455 |  number of upsets: 268  | ratio: 594.9515  | inversions: 1
+1981 | Method_6: | ndcg: 0.79043 |  number of upsets: 146  | ratio: 283.3378  | inversions: 83
+Evaluations from 1982:
+['Texas-Arlington', 1, 4, 0.2, 5, 0]
+1982 | Method_1: | ndcg: 0.84219 |  number of upsets: 124  | ratio: 242.1806  | inversions: 83
+1982 | Method_2: | ndcg: 0.86043 |  number of upsets: 129  | ratio: 259.1424  | inversions: 72
+1982 | Method_3: | ndcg: 0.56971 |  number of upsets: 134  | ratio: 326.2145  | inversions: 59
+1982 | Method_4: | ndcg: 0.90863 |  number of upsets: 122  | ratio: 215.9562  | inversions: 66
+1982 | Method_5: | ndcg: 0.29469 |  number of upsets: 186  | ratio: 471.869   | inversions: 15
+1982 | Method_6: | ndcg: 0.84219 |  number of upsets: 124  | ratio: 242.1806  | inversions: 83
+Evaluations from 1983:
+['Northwestern', 2, 9, 0.18181818181818182, 11, 0]
+1983 | Method_1: | ndcg: 0.79762 |  number of upsets: 113  | ratio: 195.0184  | inversions: 50
+1983 | Method_2: | ndcg: 0.72921 |  number of upsets: 129  | ratio: 212.908   | inversions: 55
+1983 | Method_3: | ndcg: 0.44223 |  number of upsets: 138  | ratio: 311.7542  | inversions: 27
+1983 | Method_4: | ndcg: 0.77789 |  number of upsets: 129  | ratio: 204.3377  | inversions: 62
+1983 | Method_5: | ndcg: 0.1837  |  number of upsets: 206  | ratio: 417.4356  | inversions: 9
+1983 | Method_6: | ndcg: 0.79762 |  number of upsets: 113  | ratio: 195.0184  | inversions: 50
+Evaluations from 1984:
+['WestTexasState', 1, 6, 0.14285714285714285, 7, 0]
+1984 | Method_1: | ndcg: 0.69269 |  number of upsets: 120  | ratio: 272.4387  | inversions: 45
+1984 | Method_2: | ndcg: 0.78685 |  number of upsets: 137  | ratio: 346.2443  | inversions: 67
+1984 | Method_3: | ndcg: 0.60566 |  number of upsets: 149  | ratio: 384.0429  | inversions: 41
+1984 | Method_4: | ndcg: 0.77777 |  number of upsets: 141  | ratio: 353.705   | inversions: 45
+1984 | Method_5: | ndcg: 0.08284 |  number of upsets: 214  | ratio: 432.4153  | inversions: 2
+1984 | Method_6: | ndcg: 0.69269 |  number of upsets: 120  | ratio: 272.4387  | inversions: 45
+Evaluations from 1985:
+['KansasState', 1, 10, 0.09090909090909091, 11, 0]
+1985 | Method_1: | ndcg: 0.89513 |  number of upsets: 117  | ratio: 189.4258  | inversions: 110
+1985 | Method_2: | ndcg: 0.90198 |  number of upsets: 124  | ratio: 197.4189  | inversions: 126
+1985 | Method_3: | ndcg: 0.69167 |  number of upsets: 132  | ratio: 293.2976  | inversions: 81
+1985 | Method_4: | ndcg: 0.91598 |  number of upsets: 129  | ratio: 196.4958  | inversions: 107
+1985 | Method_5: | ndcg: 0.38145 |  number of upsets: 187  | ratio: 383.4444  | inversions: 23
+1985 | Method_6: | ndcg: 0.89513 |  number of upsets: 117  | ratio: 189.4258  | inversions: 110
+Evaluations from 1986:
+Data for 1986 saved as data/1986.txt
+['KansasState', 1, 8, 0.1111111111111111, 9, 0]
+1986 | Method_1: | ndcg: 0.79153 |  number of upsets: 128  | ratio: 247.2519  | inversions: 94
+1986 | Method_2: | ndcg: 0.92205 |  number of upsets: 134  | ratio: 231.0163  | inversions: 95
+1986 | Method_3: | ndcg: 0.75463 |  number of upsets: 144  | ratio: 304.5469  | inversions: 75
+1986 | Method_4: | ndcg: 0.94008 |  number of upsets: 132  | ratio: 215.7756  | inversions: 69
+1986 | Method_5: | ndcg: 0.64128 |  number of upsets: 179  | ratio: 348.1213  | inversions: 33
+1986 | Method_6: | ndcg: 0.79153 |  number of upsets: 128  | ratio: 247.2519  | inversions: 94
+Evaluations from 1987:
+Data for 1987 saved as data/1987.txt
+['LongBeachState', 1, 7, 0.125, 8, 0]
+1987 | Method_1: | ndcg: 0.96823 |  number of upsets: 106  | ratio: 166.6367  | inversions: 94
+1987 | Method_2: | ndcg: 0.949   |  number of upsets: 110  | ratio: 164.8001  | inversions: 81
+1987 | Method_3: | ndcg: 0.7819  |  number of upsets: 133  | ratio: 267.0552  | inversions: 76
+1987 | Method_4: | ndcg: 0.96265 |  number of upsets: 114  | ratio: 170.7798  | inversions: 96
+1987 | Method_5: | ndcg: 0.72121 |  number of upsets: 157  | ratio: 308.0744  | inversions: 49
+1987 | Method_6: | ndcg: 0.96823 |  number of upsets: 106  | ratio: 166.6367  | inversions: 94
+Evaluations from 1988:
+['NewMexico', 1, 10, 0.09090909090909091, 11, 0]
+1988 | Method_1: | ndcg: 0.93312 |  number of upsets: 100  | ratio: 153.0553  | inversions: 63
+1988 | Method_2: | ndcg: 0.98316 |  number of upsets: 100  | ratio: 151.8491  | inversions: 92
+1988 | Method_3: | ndcg: 0.65034 |  number of upsets: 125  | ratio: 299.8905  | inversions: 47
+1988 | Method_4: | ndcg: 0.97673 |  number of upsets: 98   | ratio: 149.266   | inversions: 104
+1988 | Method_5: | ndcg: 0.31402 |  number of upsets: 189  | ratio: 410.4759  | inversions: 12
+1988 | Method_6: | ndcg: 0.93312 |  number of upsets: 100  | ratio: 153.0553  | inversions: 63
+Evaluations from 1989:
+['Cincinnati', 1, 8, 0.1, 10, 1]
+1989 | Method_1: | ndcg: 0.84401 |  number of upsets: 97   | ratio: 196.0785  | inversions: 91
+1989 | Method_2: | ndcg: 0.84786 |  number of upsets: 96   | ratio: 211.2953  | inversions: 93
+1989 | Method_3: | ndcg: 0.75154 |  number of upsets: 107  | ratio: 270.5495  | inversions: 74
+1989 | Method_4: | ndcg: 0.90328 |  number of upsets: 89   | ratio: 168.5755  | inversions: 89
+1989 | Method_5: | ndcg: 0.35965 |  number of upsets: 208  | ratio: 472.6403  | inversions: 20
+1989 | Method_6: | ndcg: 0.84401 |  number of upsets: 97   | ratio: 196.0785  | inversions: 91
+Evaluations from 1990:
+Data for 1990 saved as data/1990.txt
+1990 | Method_1: | ndcg: 0.90197 |  number of upsets: 104  | ratio: 206.2659  | inversions: 93
+1990 | Method_2: | ndcg: 0.82129 |  number of upsets: 111  | ratio: 237.8315  | inversions: 79
+1990 | Method_3: | ndcg: 0.60691 |  number of upsets: 139  | ratio: 298.7758  | inversions: 71
+1990 | Method_4: | ndcg: 0.82251 |  number of upsets: 115  | ratio: 227.97    | inversions: 85
+1990 | Method_5: | ndcg: 0.26539 |  number of upsets: 196  | ratio: 380.6325  | inversions: 6
+1990 | Method_6: | ndcg: 0.90197 |  number of upsets: 104  | ratio: 206.2659  | inversions: 93
+Evaluations from 1991:
+Data for 1991 saved as data/1991.txt
+['CalStateFullerton', 1, 9, 0.1, 10, 0]
+1991 | Method_1: | ndcg: 0.96815 |  number of upsets: 95   | ratio: 144.6124  | inversions: 108
+1991 | Method_2: | ndcg: 0.91197 |  number of upsets: 103  | ratio: 164.6934  | inversions: 81
+1991 | Method_3: | ndcg: 0.77377 |  number of upsets: 115  | ratio: 211.0537  | inversions: 61
+1991 | Method_4: | ndcg: 0.92436 |  number of upsets: 102  | ratio: 159.5373  | inversions: 91
+1991 | Method_5: | ndcg: 0.15606 |  number of upsets: 220  | ratio: 503.2848  | inversions: 5
+1991 | Method_6: | ndcg: 0.96815 |  number of upsets: 95   | ratio: 144.6124  | inversions: 108
+Evaluations from 1992:
+Data for 1992 saved as data/1992.txt
+1992 | Method_1: | ndcg: 0.93298 |  number of upsets: 128  | ratio: 211.0195  | inversions: 99
+1992 | Method_2: | ndcg: 0.8679  |  number of upsets: 140  | ratio: 256.4817  | inversions: 93
+1992 | Method_3: | ndcg: 0.67267 |  number of upsets: 143  | ratio: 345.757   | inversions: 64
+1992 | Method_4: | ndcg: 0.9315  |  number of upsets: 135  | ratio: 233.7956  | inversions: 91
+1992 | Method_5: | ndcg: 0.47841 |  number of upsets: 191  | ratio: 347.5096  | inversions: 17
+1992 | Method_6: | ndcg: 0.93298 |  number of upsets: 128  | ratio: 211.0195  | inversions: 99
+Evaluations from 1993:
+Data for 1993 saved as data/1993.txt
+['Temple', 1, 10, 0.09090909090909091, 11, 0]
+1993 | Method_1: | ndcg: 0.68756 |  number of upsets: 116  | ratio: 219.084   | inversions: 68
+1993 | Method_2: | ndcg: 0.7838  |  number of upsets: 129  | ratio: 225.6336  | inversions: 96
+1993 | Method_3: | ndcg: 0.62919 |  number of upsets: 157  | ratio: 334.543   | inversions: 47
+1993 | Method_4: | ndcg: 0.86941 |  number of upsets: 123  | ratio: 203.5005  | inversions: 106
+1993 | Method_5: | ndcg: 0.27884 |  number of upsets: 212  | ratio: 453.2485  | inversions: 16
+1993 | Method_6: | ndcg: 0.68756 |  number of upsets: 116  | ratio: 219.084   | inversions: 68
+Evaluations from 1994:
+Data for 1994 saved as data/1994.txt
+1994 | Method_1: | ndcg: 0.78268 |  number of upsets: 116  | ratio: 211.9203  | inversions: 81
+1994 | Method_2: | ndcg: 0.78424 |  number of upsets: 119  | ratio: 218.1734  | inversions: 95
+1994 | Method_3: | ndcg: 0.62816 |  number of upsets: 126  | ratio: 368.7178  | inversions: 79
+1994 | Method_4: | ndcg: 0.92504 |  number of upsets: 115  | ratio: 193.0862  | inversions: 95
+1994 | Method_5: | ndcg: 0.34356 |  number of upsets: 197  | ratio: 504.4333  | inversions: 33
+1994 | Method_6: | ndcg: 0.78268 |  number of upsets: 116  | ratio: 211.9203  | inversions: 81
+Evaluations from 1995:
+Data for 1995 saved as data/1995.txt
+1995 | Method_1: | ndcg: 0.84191 |  number of upsets: 107  | ratio: 207.5658  | inversions: 66
+1995 | Method_2: | ndcg: 0.90476 |  number of upsets: 108  | ratio: 178.8993  | inversions: 78
+1995 | Method_3: | ndcg: 0.81607 |  number of upsets: 134  | ratio: 253.6698  | inversions: 46
+1995 | Method_4: | ndcg: 0.89789 |  number of upsets: 102  | ratio: 167.124   | inversions: 65
+1995 | Method_5: | ndcg: 0.27287 |  number of upsets: 166  | ratio: 486.4903  | inversions: 36
+1995 | Method_6: | ndcg: 0.84191 |  number of upsets: 107  | ratio: 207.5658  | inversions: 66
+Evaluations from 1996:
+Data for 1996 saved as data/1996.txt
+1996 | Method_1: | ndcg: 0.88791 |  number of upsets: 103  | ratio: 178.7995  | inversions: 97
+1996 | Method_2: | ndcg: 0.847   |  number of upsets: 109  | ratio: 199.1409  | inversions: 84
+1996 | Method_3: | ndcg: 0.78696 |  number of upsets: 140  | ratio: 286.0467  | inversions: 89
+1996 | Method_4: | ndcg: 0.90497 |  number of upsets: 109  | ratio: 187.1232  | inversions: 111
+1996 | Method_5: | ndcg: 0.57301 |  number of upsets: 188  | ratio: 306.2009  | inversions: 21
+1996 | Method_6: | ndcg: 0.88791 |  number of upsets: 103  | ratio: 178.7995  | inversions: 97
+Evaluations from 1997:
+Data for 1997 saved as data/1997.txt
+1997 | Method_1: | ndcg: 0.86586 |  number of upsets: 104  | ratio: 169.3697  | inversions: 67
+1997 | Method_2: | ndcg: 0.87241 |  number of upsets: 111  | ratio: 183.6404  | inversions: 83
+1997 | Method_3: | ndcg: 0.89583 |  number of upsets: 116  | ratio: 223.9021  | inversions: 86
+1997 | Method_4: | ndcg: 0.90387 |  number of upsets: 107  | ratio: 172.2004  | inversions: 72
+1997 | Method_5: | ndcg: 0.6286  |  number of upsets: 177  | ratio: 312.919   | inversions: 42
+1997 | Method_6: | ndcg: 0.86586 |  number of upsets: 104  | ratio: 169.3697  | inversions: 67
+Evaluations from 1998:
+Data for 1998 saved as data/1998.txt
+1998 | Method_1: | ndcg: 0.84877 |  number of upsets: 109  | ratio: 225.0323  | inversions: 107
+1998 | Method_2: | ndcg: 0.84821 |  number of upsets: 118  | ratio: 238.6371  | inversions: 110
+1998 | Method_3: | ndcg: 0.7198  |  number of upsets: 128  | ratio: 280.2775  | inversions: 67
+1998 | Method_4: | ndcg: 0.82317 |  number of upsets: 115  | ratio: 242.1634  | inversions: 97
+1998 | Method_5: | ndcg: 0.54549 |  number of upsets: 204  | ratio: 427.1929  | inversions: 56
+1998 | Method_6: | ndcg: 0.84877 |  number of upsets: 109  | ratio: 225.0323  | inversions: 107
+Evaluations from 1999:
+1999 | Method_1: | ndcg: 0.88653 |  number of upsets: 138  | ratio: 271.8792  | inversions: 86
+1999 | Method_2: | ndcg: 0.92006 |  number of upsets: 141  | ratio: 265.2689  | inversions: 104
+1999 | Method_3: | ndcg: 0.81299 |  number of upsets: 152  | ratio: 296.4313  | inversions: 73
+1999 | Method_4: | ndcg: 0.95365 |  number of upsets: 142  | ratio: 241.5701  | inversions: 113
+1999 | Method_5: | ndcg: 0.67383 |  number of upsets: 215  | ratio: 397.3453  | inversions: 63
+1999 | Method_6: | ndcg: 0.88653 |  number of upsets: 138  | ratio: 271.8792  | inversions: 86
+Evaluations from 2000:
+['KentState', 1, 9, 0.1, 10, 0]
+2000 | Method_1: | ndcg: 0.81503 |  number of upsets: 129  | ratio: 201.8066  | inversions: 64
+2000 | Method_2: | ndcg: 0.91847 |  number of upsets: 136  | ratio: 218.2365  | inversions: 98
+2000 | Method_3: | ndcg: 0.82213 |  number of upsets: 141  | ratio: 283.1831  | inversions: 65
+2000 | Method_4: | ndcg: 0.90476 |  number of upsets: 128  | ratio: 224.6791  | inversions: 102
+2000 | Method_5: | ndcg: 0.44921 |  number of upsets: 201  | ratio: 455.3978  | inversions: 31
+2000 | Method_6: | ndcg: 0.81503 |  number of upsets: 129  | ratio: 201.8066  | inversions: 64
+Evaluations from 2001:
+['Rutgers', 1, 9, 0.1, 10, 0]
+2001 | Method_1: | ndcg: 0.81973 |  number of upsets: 130  | ratio: 260.9594  | inversions: 70
+2001 | Method_2: | ndcg: 0.78121 |  number of upsets: 129  | ratio: 244.4137  | inversions: 58
+2001 | Method_3: | ndcg: 0.65734 |  number of upsets: 148  | ratio: 337.431   | inversions: 49
+2001 | Method_4: | ndcg: 0.87948 |  number of upsets: 128  | ratio: 240.4324  | inversions: 97
+2001 | Method_5: | ndcg: 0.62432 |  number of upsets: 212  | ratio: 374.3392  | inversions: 41
+2001 | Method_6: | ndcg: 0.81973 |  number of upsets: 130  | ratio: 260.9594  | inversions: 70
+Evaluations from 2002:
+['Texas-ElPaso', 1, 10, 0.09090909090909091, 11, 0]
+2002 | Method_1: | ndcg: 0.9312  |  number of upsets: 133  | ratio: 244.5538  | inversions: 93
+2002 | Method_2: | ndcg: 0.89928 |  number of upsets: 144  | ratio: 265.5725  | inversions: 110
+2002 | Method_3: | ndcg: 0.82446 |  number of upsets: 151  | ratio: 345.0239  | inversions: 99
+2002 | Method_4: | ndcg: 0.91348 |  number of upsets: 142  | ratio: 263.7183  | inversions: 103
+2002 | Method_5: | ndcg: 0.4604  |  number of upsets: 191  | ratio: 406.7961  | inversions: 42
+2002 | Method_6: | ndcg: 0.9312  |  number of upsets: 133  | ratio: 244.5538  | inversions: 93
+Evaluations from 2003:
+2003 | Method_1: | ndcg: 0.84753 |  number of upsets: 146  | ratio: 302.6436  | inversions: 69
+2003 | Method_2: | ndcg: 0.86076 |  number of upsets: 145  | ratio: 293.9718  | inversions: 61
+2003 | Method_3: | ndcg: 0.82152 |  number of upsets: 140  | ratio: 305.8259  | inversions: 75
+2003 | Method_4: | ndcg: 0.9334  |  number of upsets: 139  | ratio: 269.7796  | inversions: 99
+2003 | Method_5: | ndcg: 0.6063  |  number of upsets: 181  | ratio: 372.2042  | inversions: 52
+2003 | Method_6: | ndcg: 0.84753 |  number of upsets: 146  | ratio: 302.6436  | inversions: 69
+Evaluations from 2004:
+2004 | Method_1: | ndcg: 0.91656 |  number of upsets: 123  | ratio: 219.9195  | inversions: 66
+2004 | Method_2: | ndcg: 0.89585 |  number of upsets: 137  | ratio: 237.1341  | inversions: 74
+2004 | Method_3: | ndcg: 0.91675 |  number of upsets: 149  | ratio: 249.7588  | inversions: 87
+2004 | Method_4: | ndcg: 0.92178 |  number of upsets: 138  | ratio: 224.422   | inversions: 77
+2004 | Method_5: | ndcg: 0.54063 |  number of upsets: 233  | ratio: 431.6381  | inversions: 22
+2004 | Method_6: | ndcg: 0.91656 |  number of upsets: 123  | ratio: 219.9195  | inversions: 66
+Evaluations from 2005:
+2005 | Method_1: | ndcg: 0.87003 |  number of upsets: 129  | ratio: 219.0804  | inversions: 106
+2005 | Method_2: | ndcg: 0.90642 |  number of upsets: 140  | ratio: 242.8386  | inversions: 148
+2005 | Method_3: | ndcg: 0.70862 |  number of upsets: 155  | ratio: 315.4957  | inversions: 67
+2005 | Method_4: | ndcg: 0.92262 |  number of upsets: 149  | ratio: 238.3737  | inversions: 107
+2005 | Method_5: | ndcg: 0.48809 |  number of upsets: 228  | ratio: 407.7737  | inversions: 29
+2005 | Method_6: | ndcg: 0.87003 |  number of upsets: 129  | ratio: 219.0804  | inversions: 106
+Evaluations from 2006:
+2006 | Method_1: | ndcg: 0.93085 |  number of upsets: 134  | ratio: 259.1165  | inversions: 107
+2006 | Method_2: | ndcg: 0.90821 |  number of upsets: 153  | ratio: 275.4686  | inversions: 83
+2006 | Method_3: | ndcg: 0.8534  |  number of upsets: 153  | ratio: 284.5127  | inversions: 76
+2006 | Method_4: | ndcg: 0.94003 |  number of upsets: 147  | ratio: 237.2177  | inversions: 101
+2006 | Method_5: | ndcg: 0.49537 |  number of upsets: 210  | ratio: 373.1538  | inversions: 45
+2006 | Method_6: | ndcg: 0.93085 |  number of upsets: 134  | ratio: 259.1165  | inversions: 107
+Evaluations from 2007:
+2007 | Method_1: | ndcg: 0.76375 |  number of upsets: 160  | ratio: 353.2043  | inversions: 84
+2007 | Method_2: | ndcg: 0.72127 |  number of upsets: 179  | ratio: 376.3001  | inversions: 74
+2007 | Method_3: | ndcg: 0.80111 |  number of upsets: 166  | ratio: 368.1586  | inversions: 64
+2007 | Method_4: | ndcg: 0.94439 |  number of upsets: 166  | ratio: 335.8991  | inversions: 128
+2007 | Method_5: | ndcg: 0.55043 |  number of upsets: 248  | ratio: 568.7333  | inversions: 46
+2007 | Method_6: | ndcg: 0.76375 |  number of upsets: 160  | ratio: 353.2043  | inversions: 84
+Evaluations from 2008:
+['Idaho', 1, 10, 0.09090909090909091, 11, 0]
+2008 | Method_1: | ndcg: 0.80412 |  number of upsets: 151  | ratio: 261.1513  | inversions: 57
+2008 | Method_2: | ndcg: 0.92007 |  number of upsets: 163  | ratio: 266.5669  | inversions: 71
+2008 | Method_3: | ndcg: 0.87487 |  number of upsets: 170  | ratio: 340.7029  | inversions: 63
+2008 | Method_4: | ndcg: 0.92936 |  number of upsets: 152  | ratio: 248.7903  | inversions: 64
+2008 | Method_5: | ndcg: 0.56466 |  number of upsets: 231  | ratio: 482.565   | inversions: 34
+2008 | Method_6: | ndcg: 0.80412 |  number of upsets: 151  | ratio: 261.1513  | inversions: 57
+Evaluations from 2009:
+2009 | Method_1: | ndcg: 0.85256 |  number of upsets: 149  | ratio: 250.2211  | inversions: 95
+2009 | Method_2: | ndcg: 0.84073 |  number of upsets: 146  | ratio: 251.8625  | inversions: 92
+2009 | Method_3: | ndcg: 0.70458 |  number of upsets: 160  | ratio: 324.1084  | inversions: 79
+2009 | Method_4: | ndcg: 0.90265 |  number of upsets: 146  | ratio: 250.0292  | inversions: 76
+2009 | Method_5: | ndcg: 0.69458 |  number of upsets: 234  | ratio: 418.3698  | inversions: 33
+2009 | Method_6: | ndcg: 0.85256 |  number of upsets: 149  | ratio: 250.2211  | inversions: 95
+Evaluations from 2010:
+['Akron', 1, 10, 0.09090909090909091, 11, 0]
+2010 | Method_1: | ndcg: 0.83833 |  number of upsets: 154  | ratio: 252.819   | inversions: 80
+2010 | Method_2: | ndcg: 0.7742  |  number of upsets: 161  | ratio: 287.7399  | inversions: 67
+2010 | Method_3: | ndcg: 0.75024 |  number of upsets: 172  | ratio: 310.2411  | inversions: 60
+2010 | Method_4: | ndcg: 0.84311 |  number of upsets: 151  | ratio: 251.3992  | inversions: 82
+2010 | Method_5: | ndcg: 0.40946 |  number of upsets: 243  | ratio: 547.0712  | inversions: 23
+2010 | Method_6: | ndcg: 0.83833 |  number of upsets: 154  | ratio: 252.819   | inversions: 80
+Evaluations from 2011:
+2011 | Method_1: | ndcg: 0.80576 |  number of upsets: 133  | ratio: 291.0811  | inversions: 71
+2011 | Method_2: | ndcg: 0.87047 |  number of upsets: 149  | ratio: 295.44    | inversions: 74
+2011 | Method_3: | ndcg: 0.86563 |  number of upsets: 166  | ratio: 321.9323  | inversions: 66
+2011 | Method_4: | ndcg: 0.93531 |  number of upsets: 141  | ratio: 261.8416  | inversions: 85
+2011 | Method_5: | ndcg: 0.42036 |  number of upsets: 284  | ratio: 538.9707  | inversions: 28
+2011 | Method_6: | ndcg: 0.80576 |  number of upsets: 133  | ratio: 291.0811  | inversions: 71
+Evaluations from 2012:
+2012 | Method_1: | ndcg: 0.86671 |  number of upsets: 123  | ratio: 207.64    | inversions: 78
+2012 | Method_2: | ndcg: 0.82751 |  number of upsets: 136  | ratio: 217.8488  | inversions: 57
+2012 | Method_3: | ndcg: 0.76625 |  number of upsets: 152  | ratio: 272.3     | inversions: 58
+2012 | Method_4: | ndcg: 0.89    |  number of upsets: 135  | ratio: 216.0502  | inversions: 97
+2012 | Method_5: | ndcg: 0.59152 |  number of upsets: 234  | ratio: 482.7557  | inversions: 29
+2012 | Method_6: | ndcg: 0.86671 |  number of upsets: 123  | ratio: 207.64    | inversions: 78
+Evaluations from 2013:
+['FloridaInternational', 1, 10, 0.09090909090909091, 11, 0]
+2013 | Method_1: | ndcg: 0.89021 |  number of upsets: 120  | ratio: 217.4006  | inversions: 126
+2013 | Method_2: | ndcg: 0.8653  |  number of upsets: 137  | ratio: 238.5221  | inversions: 117
+2013 | Method_3: | ndcg: 0.80233 |  number of upsets: 143  | ratio: 259.5715  | inversions: 122
+2013 | Method_4: | ndcg: 0.87798 |  number of upsets: 122  | ratio: 220.2528  | inversions: 157
+2013 | Method_5: | ndcg: 0.43912 |  number of upsets: 227  | ratio: 494.5928  | inversions: 28
+2013 | Method_6: | ndcg: 0.89021 |  number of upsets: 120  | ratio: 217.4006  | inversions: 126
+Evaluations from 2014:
+['SMU', 1, 11, 0.08333333333333333, 12, 0]
+2014 | Method_1: | ndcg: 0.90647 |  number of upsets: 150  | ratio: 319.7566  | inversions: 106
+2014 | Method_2: | ndcg: 0.76952 |  number of upsets: 164  | ratio: 279.5909  | inversions: 46
+2014 | Method_3: | ndcg: 0.69988 |  number of upsets: 170  | ratio: 287.7274  | inversions: 34
+2014 | Method_4: | ndcg: 0.85264 |  number of upsets: 160  | ratio: 274.3667  | inversions: 77
+2014 | Method_5: | ndcg: 0.23957 |  number of upsets: 290  | ratio: 712.2055  | inversions: 8
+2014 | Method_6: | ndcg: 0.90647 |  number of upsets: 150  | ratio: 319.7566  | inversions: 106
+Evaluations from 2015:
+2015 | Method_1: | ndcg: 0.95051 |  number of upsets: 120  | ratio: 212.0379  | inversions: 113
+2015 | Method_2: | ndcg: 0.90279 |  number of upsets: 137  | ratio: 255.5879  | inversions: 118
+2015 | Method_3: | ndcg: 0.70055 |  number of upsets: 150  | ratio: 370.292   | inversions: 67
+2015 | Method_4: | ndcg: 0.88902 |  number of upsets: 129  | ratio: 248.5549  | inversions: 91
+2015 | Method_5: | ndcg: 0.24615 |  number of upsets: 278  | ratio: 759.8573  | inversions: 13
+2015 | Method_6: | ndcg: 0.95051 |  number of upsets: 120  | ratio: 212.0379  | inversions: 113
+Evaluations from 2016:
+['TexasState', 1, 10, 0.09090909090909091, 11, 0]
+2016 | Method_1: | ndcg: 0.90021 |  number of upsets: 167  | ratio: 306.2104  | inversions: 123
+2016 | Method_2: | ndcg: 0.86428 |  number of upsets: 184  | ratio: 314.9236  | inversions: 81
+2016 | Method_3: | ndcg: 0.81317 |  number of upsets: 187  | ratio: 385.5482  | inversions: 59
+2016 | Method_4: | ndcg: 0.93367 |  number of upsets: 163  | ratio: 290.4022  | inversions: 104
+2016 | Method_5: | ndcg: 0.49475 |  number of upsets: 284  | ratio: 533.1795  | inversions: 34
+2016 | Method_6: | ndcg: 0.90021 |  number of upsets: 167  | ratio: 306.2104  | inversions: 123
+Evaluations from 2017:
+['KentState', 1, 10, 0.09090909090909091, 11, 0]
+2017 | Method_1: | ndcg: 0.93073 |  number of upsets: 156  | ratio: 293.901   | inversions: 84
+2017 | Method_2: | ndcg: 0.87537 |  number of upsets: 168  | ratio: 288.1169  | inversions: 63
+2017 | Method_3: | ndcg: 0.86807 |  number of upsets: 170  | ratio: 291.7779  | inversions: 60
+2017 | Method_4: | ndcg: 0.91117 |  number of upsets: 160  | ratio: 264.5378  | inversions: 78
+2017 | Method_5: | ndcg: 0.65186 |  number of upsets: 238  | ratio: 534.9703  | inversions: 30
+2017 | Method_6: | ndcg: 0.93073 |  number of upsets: 156  | ratio: 293.901   | inversions: 84
+Evaluations from 2018:
+2018 | Method_1: | ndcg: 0.90572 |  number of upsets: 162  | ratio: 258.1305  | inversions: 94
+2018 | Method_2: | ndcg: 0.7771  |  number of upsets: 167  | ratio: 269.6162  | inversions: 76
+2018 | Method_3: | ndcg: 0.65021 |  number of upsets: 179  | ratio: 359.5707  | inversions: 59
+2018 | Method_4: | ndcg: 0.86739 |  number of upsets: 159  | ratio: 267.9499  | inversions: 85
+2018 | Method_5: | ndcg: 0.34875 |  number of upsets: 238  | ratio: 633.1234  | inversions: 60
+2018 | Method_6: | ndcg: 0.90572 |  number of upsets: 162  | ratio: 258.1305  | inversions: 94
+Evaluations from 2019:
+2019 | Method_1: | ndcg: 0.88166 |  number of upsets: 151  | ratio: 270.8721  | inversions: 66
+2019 | Method_2: | ndcg: 0.926   |  number of upsets: 170  | ratio: 267.6302  | inversions: 50
+2019 | Method_3: | ndcg: 0.87136 |  number of upsets: 180  | ratio: 357.5819  | inversions: 61
+2019 | Method_4: | ndcg: 0.9513  |  number of upsets: 154  | ratio: 246.958   | inversions: 67
+2019 | Method_5: | ndcg: 0.71544 |  number of upsets: 248  | ratio: 500.2098  | inversions: 41
+2019 | Method_6: | ndcg: 0.88166 |  number of upsets: 151  | ratio: 270.8721  | inversions: 66
+Evaluations from 2020:
+Buffalo what
+['Illinois', 2, 6, 0.25, 8, 0]
+2020 | Method_1: | ndcg: 0.1088  |  number of upsets: 108  | ratio: 132.3349  | inversions: 17
+2020 | Method_2: | ndcg: 0.86073 |  number of upsets: 105  | ratio: 203.4073  | inversions: 106
+2020 | Method_3: | ndcg: 0.56807 |  number of upsets: 117  | ratio: 165.1905  | inversions: 48
+2020 | Method_4: | ndcg: 0.82621 |  number of upsets: 102  | ratio: 183.8382  | inversions: 87
+2020 | Method_5: | ndcg: 0.01885 |  number of upsets: 196  | ratio: 267.2671  | inversions: 2
+2020 | Method_6: | ndcg: 0.1088  |  number of upsets: 108  | ratio: 132.3349  | inversions: 17
+Evaluations from 2021:
+['Temple', 2, 9, 0.18181818181818182, 11, 0]
+2021 | Method_1: | ndcg: 0.90055 |  number of upsets: 154  | ratio: 275.5948  | inversions: 103
+2021 | Method_2: | ndcg: 0.81464 |  number of upsets: 181  | ratio: 342.3311  | inversions: 66
+2021 | Method_3: | ndcg: 0.74001 |  number of upsets: 197  | ratio: 357.6699  | inversions: 47
+2021 | Method_4: | ndcg: 0.86119 |  number of upsets: 180  | ratio: 321.7928  | inversions: 66
+2021 | Method_5: | ndcg: 0.42444 |  number of upsets: 236  | ratio: 564.2586  | inversions: 27
+2021 | Method_6: | ndcg: 0.90055 |  number of upsets: 154  | ratio: 275.5948  | inversions: 103
+Evaluations from 2022:
+2022 | Method_1: | ndcg: 0.83272 |  number of upsets: 169  | ratio: 303.1277  | inversions: 65
+2022 | Method_2: | ndcg: 0.78082 |  number of upsets: 184  | ratio: 318.7779  | inversions: 35
+2022 | Method_3: | ndcg: 0.73511 |  number of upsets: 201  | ratio: 358.1619  | inversions: 35
+2022 | Method_4: | ndcg: 0.88791 |  number of upsets: 181  | ratio: 310.2393  | inversions: 48
+2022 | Method_5: | ndcg: 0.25674 |  number of upsets: 297  | ratio: 875.9378  | inversions: 5
+2022 | Method_6: | ndcg: 0.83272 |  number of upsets: 169  | ratio: 303.1277  | inversions: 65
+Evaluations from 2023:
+['Temple', 1, 8, 0.1111111111111111, 9, 0]
+2023 | Method_1: | ndcg: 0.94254 |  number of upsets: 162  | ratio: 260.7004  | inversions: 101
+2023 | Method_2: | ndcg: 0.91822 |  number of upsets: 173  | ratio: 277.4846  | inversions: 97
+2023 | Method_3: | ndcg: 0.86963 |  number of upsets: 178  | ratio: 294.5244  | inversions: 46
+2023 | Method_4: | ndcg: 0.88458 |  number of upsets: 160  | ratio: 255.1536  | inversions: 71
+2023 | Method_5: | ndcg: 0.48928 |  number of upsets: 263  | ratio: 501.2716  | inversions: 21
+2023 | Method_6: | ndcg: 0.94254 |  number of upsets: 162  | ratio: 260.7004  | inversions: 101
+Evaluations from 2024:
+2024 | Method_1: | ndcg: 0.88157 |  number of upsets: 184  | ratio: 347.9572  | inversions: 81
+2024 | Method_2: | ndcg: 0.80906 |  number of upsets: 184  | ratio: 356.7758  | inversions: 61
+2024 | Method_3: | ndcg: 0.7977  |  number of upsets: 204  | ratio: 399.9774  | inversions: 57
+2024 | Method_4: | ndcg: 0.86115 |  number of upsets: 182  | ratio: 334.0466  | inversions: 73
+2024 | Method_5: | ndcg: 0.67774 |  number of upsets: 268  | ratio: 478.2479  | inversions: 38
+2024 | Method_6: | ndcg: 0.88157 |  number of upsets: 184  | ratio: 347.9572  | inversions: 81
+Method_0 | avg_ndcg: 0.8465 | avg_upsets: 131.37777777777777 | avg_ratio: 239.5213 | inversions: 83.8
+Method_1 | avg_ndcg: 0.8579 | avg_upsets: 140.57777777777778 | avg_ratio: 252.7293 | inversions: 81.88888888888889
+Method_2 | avg_ndcg: 0.7385 | avg_upsets: 153.2              | avg_ratio: 317.0143 | inversions: 63.53333333333333
+Method_3 | avg_ndcg: 0.8979 | avg_upsets: 136.0888888888889  | avg_ratio: 237.679 | inversions: 87.08888888888889
+Method_4 | avg_ndcg: 0.4307 | avg_upsets: 221.9777777777778  | avg_ratio: 468.9115 | inversions: 27.22222222222222
+Method_5 | avg_ndcg: 0.8465 | avg_upsets: 131.37777777777777 | avg_ratio: 239.5213 | inversions: 83.8
+
+Process finished with exit code 0
