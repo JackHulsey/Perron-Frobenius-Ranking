@@ -117,6 +117,4 @@ def get_college_football_rankings(year, records):
             if team == records[i][0]:
                 ranking_indices.append(i)
                 break
-            if i == len(records) - 1:
-                print(f"{team} what")
     return rankings, ranking_indices

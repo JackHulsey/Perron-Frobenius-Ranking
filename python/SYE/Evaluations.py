@@ -60,23 +60,47 @@ def compare_rankings(r_ap, rankings):
 
     return ideal, ndcg_scores
 
-def helper(ranking, records, team_games):
+def helper(ranking, records, team_games, long_rankings=None):
     team_names = {records[ranking[j]][0]: j for j in range(len(ranking))}
-    upsets = 0
-    upsets_ratio = 0
-    weighted_count = 0
+    if long_rankings is not None:
+        full_team_names = {records[long_rankings[j]][0]: j for j in range(len(records))}
+        upsets = 0
+        total_games = 0
+        top_25 = 0
+        total_top_25 = 0
+        for team in team_names:
+            for game in team_games[team]:
+                total_top_25 += 1
+                total_games += 1
+                if team == game[2]:
+                    if game[0] not in team_names:
+                        total_top_25 -= 1
+                        # print(team, game[0], full_team_names[game[0]])
+                        upsets += 1
+                    elif full_team_names[game[0]] > full_team_names[game[2]]:
+                        upsets += 1
+                        top_25 += 1
+    else:
+        total_games = 0
+        total_top_25 = 0
+        upsets = 0
+        top_25 = 0
+        for team in team_names:
+            for game in team_games[team]:
+                total_games += 1
+                total_top_25 += 1
+                if team == game[2]:
+                    if game[0] not in team_names:
+                        upsets += 1
+                        total_top_25 -= 1
+                    elif team_names[game[2]] > team_names[game[0]]:
+                        upsets += 1
+                        top_25 += 1
+    return [upsets, upsets / total_games, top_25, top_25 / total_top_25]
 
-    for team in team_games:
-        for game in team_games[team]:
-            if team == game[2] and team_names[game[0]] > team_names[game[2]]:
-                upsets += 1
-                upsets_ratio += ((team_names[game[0]] + 1) / (team_names[game[2]] + 1))
-                weighted_count += 1 / (team_names[game[2]] + 1)
-
-    return [upsets, upsets_ratio, weighted_count]
-
-def upsets(rankings, records, team_games):
+def upsets(rankings, records, team_games, long_rankings, r_ap):
     upsets = [0] * len(rankings)
     for r in range(len(rankings)):
-        upsets[r] = helper(rankings[r], records, team_games)
+        upsets[r] = helper(rankings[r], records, team_games, long_rankings[r])
+    upsets.append(helper(r_ap, records, team_games))
     return upsets

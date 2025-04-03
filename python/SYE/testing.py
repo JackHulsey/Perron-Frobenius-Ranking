@@ -1,3 +1,6 @@
+import csv
+
+
 def merge_and_count(arr, temp_arr, left, right):
     inv_count = 0
     if left < right:
@@ -52,3 +55,24 @@ def count_inversions(arr, sorted_list):
     temp_arr = [0] * len(filtered_arr)
 
     return merge_and_count(filtered_arr, temp_arr, 0, len(filtered_arr) - 1)
+
+
+def load_rankings_from_csv(file_name, length):
+    rankings = {f"Method_{i+1}": [None] * length for i in range(6)}  # Assuming max rank 130
+    with open(file_name, "r") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header row
+        for row in reader:
+            year, method, rank, team = row
+            rank = int(rank)
+            team = int(team)
+            rankings[method][rank - 1] = team  # Index by rank (0-based)
+    return [rankings[f"Method_{i+1}"] for i in range(6)]
+
+def ranking_analysis(year, records):
+    rankings = load_rankings_from_csv(f'rankings/rankings-{year}.csv', len(records))
+
+
+
+
+# print(load_rankings_from_csv('rankings/rankings_2024.csv', 129)[5])
