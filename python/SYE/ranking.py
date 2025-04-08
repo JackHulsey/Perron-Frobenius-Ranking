@@ -112,21 +112,19 @@ def comparison(r_1, r_2, r_3, r_4, r_5, r_6, r_ap, records):
     for i in range(len(r_ap)):
         print(f"{i+1:<4}: ap: {r_ap[i]:<15} 1: {r_1[i]:<15} 2: {r_2[i]:<15} 3: {r_3[i]:<15} 4: {r_4[i]:<15} 5: {r_5[i]:<15} 6: {r_6[i]:<15}")
 
-def generate_rankings(years):
+def generate_rankings(years, league):
     for year in years:
         if year == 2020:
             continue
         print(f"Evaluations from {year}:")
         # Check if the file already exists
-        if not path.exists(f"data/{year}.txt"):
+        if not path.exists(f"NCAA/{year}.txt"):
             success = scrape_cfb_schedule(year)
         else:
             success = True
 
         if success:
-            games, team_games, records = generate_data(f'data/{year}.txt')
-            ap_rankings, ap_indices = get_college_football_rankings(year, records)
-            #print(games)
+            games, team_games, records, championship, postseason = generate_data(f'{league}/{year}.txt')
             # build the five matrices we 'need'
             results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix, A_matrix = build_matrices(team_games, records)
 
@@ -135,18 +133,19 @@ def generate_rankings(years):
             ranking_three = method_three(raw_score_matrix, score_matrix, records)
             ranking_four = method_four(A_matrix, records)
             ranking_five = method_five(raw_score_matrix, records)
-            ranking_six = method_six(weighted_score_matrix, records)
+            ranking_six = method_six(results_matrix, records)
+            ranking_seven = nfl_power_rankings(games, records)
 
-            rankings = [ranking_one, ranking_two, ranking_three, ranking_four, ranking_five, ranking_six]
+            rankings = [ranking_one, ranking_two, ranking_three, ranking_four, ranking_five, ranking_six, ranking_seven]
             rankings_data = []
 
-            # Save rankings data for later analysis
+            # Save rankings NCAA for later analysis
             for method_idx, ranking in enumerate(rankings, start=1):
                 for rank, team in enumerate(ranking, start=1):
                     rankings_data.append([year, f"Method_{method_idx}", rank, team])
 
             # Write rankings to a CSV file for the specific year
-            file_name = f"rankings/rankings_{year}.csv"
+            file_name = f"rankings/{league}/rankings_{year}.csv"
             with open(file_name, "w", newline="") as file:
                 writer = csv.writer(file)
                 writer.writerow(["Year", "Method", "Rank", "Team"])
@@ -154,7 +153,38 @@ def generate_rankings(years):
 
             print(f"Rankings for {year} have been saved to {file_name}")
 
+# Define ELO update function
+def expected_score(rating_a, rating_b):
+    return 1 / (1 + 10 ** ((rating_b - rating_a) / 400))
 
+def nfl_power_rankings(games, records):
+    team_names = {records[i][0]: i for i in range(len(records))}
+    # ELO settings
+    Base_elo = 1500
+    k = 32
+    elo = {team: Base_elo for team in team_names}
 
+    def update_elo(game, K):
+        ea = expected_score(elo[game[0]], elo[game[2]])
+        eb = expected_score(elo[game[2]], elo[game[0]])
 
+        if game[1] > game[3]:
+            sa, sb = 1, 0
+        elif game[1] < game[3]:
+            sa, sb = 0, 1
+        else:
+            sa, sb = 0.5, 0.5  # Tie
+
+        elo[game[0]] += K * (sa - ea)
+        elo[game[2]] += K * (sb - eb)
+
+    for game in games:
+        update_elo(game, k)
+
+    sorted_dict = sorted(elo.items(), key=lambda x: x[1], reverse=True)
+    rankings = []
+    for team, elo in sorted_dict:
+        rankings.append(elo)
+    rankings = np.argsort(np.array(rankings))
+    return rankings
 

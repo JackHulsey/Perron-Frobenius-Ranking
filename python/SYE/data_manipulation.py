@@ -1,10 +1,14 @@
-# this is the file that holds all the functions related to reading in the data
+# this is the file that holds all the functions related to reading in the NCAA
 # generating the games array, team_games dictionary, and records array.
 # as well as filtering out all the teams we don't want
+import csv
+from os import path
+import re
+from scraping import get_college_football_rankings
 
 def remove_ranking(team_name):
     # some teams in this database are presented like (21) Notre Dame, and I'd rather remove that (21)
-    # this will make it easier to query data later
+    # this will make it easier to query NCAA later
     if team_name[0] == '(':
       while team_name[0] != ' ':
         team_name = team_name.replace(team_name[0], '')
@@ -44,9 +48,18 @@ def parse_game_data(game_str, extra_time):
     final = (win_team, game_tuple[1], lose_team, game_tuple[3])
     return final
 
+def parse_nfl_data(game_str):
+    data_fields = game_str.split(',')
+    # Convert the resulting list into a tuple
+    game_tuple = tuple(data_fields)
+    return game_tuple
+
 def split_rows(file_path):
-    'data/{year}.txt'
-    year = int(file_path[5:9])
+    'NCAA/{year}.txt'
+    league = file_path[0:3]
+    if league == 'NFL':
+        year = int(file_path[4:8])
+    else: year = int(file_path[5:9])
     extra_time = False
     if year > 2012:
         extra_time = True
@@ -54,16 +67,30 @@ def split_rows(file_path):
     # Split the rows by newline
     with open(file_path, 'r') as data:
         rows = data.read().strip().split("\n")
-    # Create a list to hold all game data as tuples
+    # Create a list to hold all game NCAA as tuples
     games = []
+    postseason = []
 
-    # Loop through each row
-    for row in rows:
-        # Split each row by commas
-        data = parse_game_data(row, extra_time)
-        if data is not None:
-            games.append(data)
-    return games
+    if league == 'NCA':
+        # Loop through each row
+        for row in rows:
+            # Split each row by commas
+            data = parse_game_data(row, extra_time)
+            if data is not None:
+                games.append(data)
+        games.remove(games[-1])
+        return games, data
+    if league == 'NFL':
+        for row in rows:
+            data_fields = row.split(',')
+            # Convert the resulting list into a tuple
+            data = tuple(data_fields)
+            if data is not None:
+                if data[-1] == 'REG':
+                    games.append(data[:4])
+                else:
+                    postseason.append(data[:4])
+        return games, data, postseason
 
 def generate_dictionary(games):
     # Create a dictionary to store each team's games
@@ -123,7 +150,14 @@ def filter_teams(games, team_games, records):
 
 def generate_data(file_path, verbose=False, filter = True):
     # the massive array of all the games tuples
-    games = split_rows(file_path)
+    league = file_path[0:3]
+    postseason = None
+    if league == 'NCA':
+        games, championship = split_rows(file_path)
+
+    elif league == 'NFL':
+        filter = False
+        games, championship, postseason = split_rows(file_path)
 
     # a dictionary of game info
     # Key: team name
@@ -144,4 +178,33 @@ def generate_data(file_path, verbose=False, filter = True):
     team_games = generate_dictionary(games)
     # print(len(records))
 
-    return games, team_games, records
+    return games, team_games, records, championship, postseason
+
+def load_rankings_from_csv(file_name, length):
+    rankings = {f"Method_{i+1}": [None] * length for i in range(7)}  # Assuming max rank 130
+    with open(file_name, "r") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header row
+        for row in reader:
+            year, method, rank, team = row
+            rank = int(rank)
+            team = int(team)
+            rankings[method][rank - 1] = team  # Index by rank (0-based)
+    return [rankings[f"Method_{i+1}"] for i in range(7)]
+
+def clean_team_name(raw_name):
+    # This removes anything from the first "(" onward
+    return re.sub(r"\s*\(.*?\)", "", raw_name).strip()
+
+def get_ap_rankings(year, records):
+    if not path.exists(f"rankings/AP/{year}.txt"):
+        get_college_football_rankings(year)
+    raw_teams = [line.strip().replace(' ', "") for line in open(f'rankings/AP/{year}.txt')]
+    teams = [clean_team_name(team) for team in raw_teams]
+    ranking_indices = []
+    for team in teams:
+        for i in range(len(records)):
+            if team == records[i][0]:
+                ranking_indices.append(i)
+                break
+    return teams, ranking_indices

@@ -1,29 +1,5 @@
 import numpy as np
 
-def kendall_tau(rank1, rank2):
-    # Ensure that both ranks have the same length
-    if len(rank1) != len(rank2):
-        raise ValueError("The rankings must have the same length.")
-
-    # Count concordant and discordant pairs
-    concordant = 0
-    discordant = 0
-    n = len(rank1)
-
-    # Compare each pair of items
-    for i in range(n):
-        for j in range(i + 1, n):
-            if (rank1[i] < rank1[j] and rank2[i] < rank2[j]) or (rank1[i] > rank1[j] and rank2[i] > rank2[j]):
-                concordant += 1
-            elif (rank1[i] < rank1[j] and rank2[i] > rank2[j]) or (rank1[i] > rank1[j] and rank2[i] < rank2[j]):
-                discordant += 1
-
-    # Calculate Kendall's Tau
-    tau = (concordant - discordant) / (n * (n - 1) / 2)
-
-    return tau
-
-
 def dcg_at_k(ranking, relevance_scores, k):
     """
     Computes the Discounted Cumulative Gain (DCG) at rank k.
@@ -52,7 +28,6 @@ def ndcg(r_ap, ranking):  # Convert AP rankings to numpy array
         total += relevance
 
     return total
-
 
 def compare_rankings(r_ap, rankings):
     ideal = ndcg(r_ap, r_ap)  # Ideal NCTG score (when ranking is perfect)
@@ -97,6 +72,19 @@ def helper(ranking, records, team_games, long_rankings=None):
                         upsets += 1
                         top_25 += 1
     return [upsets, upsets / total_games, top_25, top_25 / total_top_25]
+
+def playoffs(rankings, records, postseason):
+    playoff_upsets = [0]*len(rankings)
+    tmp = 0
+    for ranking in rankings:
+        team_names = {records[ranking[j]][0]: j for j in range(len(ranking))}
+        total = 0
+        for game in postseason:
+            if team_names[game[0]] < team_names[game[2]]:
+                total += 1
+        playoff_upsets[tmp] = total
+        tmp += 1
+    return playoff_upsets
 
 def upsets(rankings, records, team_games, long_rankings, r_ap):
     upsets = [0] * len(rankings)

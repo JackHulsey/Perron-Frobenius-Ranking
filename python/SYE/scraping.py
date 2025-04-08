@@ -1,7 +1,6 @@
 import requests
 import pandas as pd
-from bs4 import BeautifulSoup
-
+from bs4 import BeautifulSoup, Comment
 
 def scrape_cfb_schedule(year):
     """Scrapes college football schedule and results for a given year from Sports-Reference."""
@@ -10,7 +9,7 @@ def scrape_cfb_schedule(year):
     response = requests.get(url)
 
     if response.status_code != 200:
-        print(f"Failed to retrieve data for {year}. Check the URL or try again later.")
+        print(f"Failed to retrieve NCAA for {year}. Check the URL or try again later.")
         return None
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -23,7 +22,7 @@ def scrape_cfb_schedule(year):
     # Extract headers
     headers = [th.text.strip() for th in table.find("thead").find_all("th")]
 
-    # Extract data rows (ignore headers)
+    # Extract NCAA rows (ignore headers)
     rows = []
     for tr in table.find("tbody").find_all("tr"):
         cells = [td.text.strip().replace("\xa0", " ") for td in tr.find_all(["th", "td"])]
@@ -35,7 +34,7 @@ def scrape_cfb_schedule(year):
 
 
     # Save to CSV
-    csv_filename = f"data/{year}.txt"
+    csv_filename = f"NCAA/{year}.txt"
     df.to_csv(csv_filename, index=False, header=False)
     print(f"Data for {year} saved as {csv_filename}")
     return True
@@ -46,7 +45,7 @@ def get_college_football_rankings_espn(year, records): # this pulls from espn bu
     response = requests.get(url, headers=headers)
 
     if response.status_code != 200:
-        print("Failed to retrieve data.")
+        print("Failed to retrieve NCAA.")
         return []
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -71,7 +70,7 @@ def get_college_football_rankings_espn(year, records): # this pulls from espn bu
     print(ranking_indices)
     return rankings, ranking_indices
 
-def get_college_football_rankings(year, records):
+def get_college_football_rankings_broken(year, records):
     # URL for the 2024 AP football rankings
     url = f"https://www.collegepollarchive.com/football/ap/seasons.cfm?seasonid={year}"
 
@@ -83,7 +82,7 @@ def get_college_football_rankings(year, records):
     response = requests.get(url, headers=headers)
 
     if response.status_code != 200:
-        print("Failed to retrieve data.")
+        print("Failed to retrieve NCAA.")
         return []
 
     # Parse the HTML content with BeautifulSoup
@@ -102,7 +101,7 @@ def get_college_football_rankings(year, records):
 
     for row in rows[:25]:  # Get only the top 25 teams
         columns = row.find_all("td")
-        if len(columns) > 1:  # Ensure there is enough data in the row
+        if len(columns) > 1:  # Ensure there is enough NCAA in the row
             team = columns[3].find("a")
             if team:
                 team = team.get_text(strip=True)
@@ -118,3 +117,47 @@ def get_college_football_rankings(year, records):
                 ranking_indices.append(i)
                 break
     return rankings, ranking_indices
+
+def get_college_football_rankings(year: int):
+    # Format Wikipedia page title
+    #wiki_year = f'{year}-{year + 1}' if year >= 2006 else str(year)
+    if year >= 2006:
+        url = f"https://en.wikipedia.org/wiki/{year}_NCAA_Division_I_FBS_football_rankings"
+    else:
+        url = f"https://en.wikipedia.org/wiki/{year}_NCAA_Division_I-A_football_rankings"
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise ValueError(f"Failed to load page: {url}")
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find the table with caption containing 'Final' and 'AP'
+    final_ap_table = None
+    for table in soup.find_all("table", class_="wikitable"):
+        final_ap_table = table
+        break
+
+    if not final_ap_table:
+        raise ValueError("Final AP Poll table not found.")
+
+    # Get the last <td> from each row (skipping header)
+    teams = []
+    for row in final_ap_table.find_all("tr")[1:]:
+        tds = row.find_all("td")
+        if not tds:
+            continue
+        last_td = tds[-1]
+        team_text = last_td.get_text(strip=True)
+        team_name = team_text.split(" (")[0]  # Remove (record) if present
+        if team_name:
+            teams.append(team_name)
+
+    if not teams:
+        raise ValueError("No team names found from last <td>s.")
+
+    # Write the team names to a text file
+    with open(f'rankings/AP/{year}.txt', 'w') as file:
+        for team in teams:
+            file.write(f"{team}\n")
+
+    print(f"Team names have been successfully saved to 'rankings/AP/{year}.txt'.")
