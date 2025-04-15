@@ -133,6 +133,7 @@ def get_college_football_rankings(year: int):
 
     # Find the table with caption containing 'Final' and 'AP'
     final_ap_table = None
+    i = 0
     for table in soup.find_all("table", class_="wikitable"):
         final_ap_table = table
         break
@@ -144,20 +145,21 @@ def get_college_football_rankings(year: int):
     teams = []
     for row in final_ap_table.find_all("tr")[1:]:
         tds = row.find_all("td")
-        if not tds:
+        if not tds or len(tds) < 2:
             continue
-        last_td = tds[-1]
+        last_td = tds[len(tds) - 3]
         team_text = last_td.get_text(strip=True)
-        team_name = team_text.split(" (")[0]  # Remove (record) if present
-        if team_name:
+        team_name = team_text.split("(")[0]  # Remove (record) if present
+        team_name = team_name.replace(" ", "").replace("ʻ", '')
+        if team_name and team_name != 'None' and not team_name.startswith('Dropped:'):
             teams.append(team_name)
 
     if not teams:
         raise ValueError("No team names found from last <td>s.")
 
     # Write the team names to a text file
-    with open(f'rankings/AP/{year}.txt', 'w') as file:
+    with open(f'rankings/AP/Week_14/{year}.txt', 'w', encoding="utf-8") as file:
         for team in teams:
             file.write(f"{team}\n")
 
-    print(f"Team names have been successfully saved to 'rankings/AP/{year}.txt'.")
+    print(f"Team names have been successfully saved to 'rankings/Coaches/{year}.txt'.")

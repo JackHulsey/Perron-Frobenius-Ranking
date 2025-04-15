@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.stats import ttest_rel
+
 
 def dcg_at_k(ranking, relevance_scores, k):
     """
@@ -86,9 +88,44 @@ def playoffs(rankings, records, postseason):
         tmp += 1
     return playoff_upsets
 
+def postseason_upsets(rankings, records, postseason):
+    playoff_upsets = [0]*len(rankings)
+    playoff_upsets_ratio = [0]*len(rankings)
+    tmp = 0
+    for ranking in rankings:
+        team_names = {records[ranking[j]][0]: j for j in range(len(ranking))}
+        total = 0
+        games_played = 0
+        for game in postseason:
+            if game[0] in team_names.keys() and game[2] not in team_names.keys() and game[1] <= game[3]:
+                games_played += 1
+                total += 1
+            if game[2] in team_names.keys() and game[0] not in team_names.keys() and game[3] <= game[1]:
+                games_played += 1
+                total += 1
+            if game[0] in team_names.keys() and game[2] in team_names.keys():
+                games_played += 1
+                if team_names[game[0]] < team_names[game[2]]:
+                    total += 1
+        playoff_upsets[tmp] = total
+        if games_played != 0:
+            playoff_upsets_ratio[tmp] = total / games_played
+        else:
+            playoff_upsets_ratio[tmp] = 1
+        tmp += 1
+    return playoff_upsets, playoff_upsets_ratio
+
 def upsets(rankings, records, team_games, long_rankings, r_ap):
     upsets = [0] * len(rankings)
     for r in range(len(rankings)):
         upsets[r] = helper(rankings[r], records, team_games, long_rankings[r])
     upsets.append(helper(r_ap, records, team_games))
     return upsets
+
+def statistical(dict):
+    p_values = []
+    for i in range(len(dict)-1):
+        t_stat, p_value = ttest_rel(dict[i], dict[7])
+        p_values.append(p_value)
+    return p_values
+

@@ -2,6 +2,7 @@
 # generating the games array, team_games dictionary, and records array.
 # as well as filtering out all the teams we don't want
 import csv
+from collections import defaultdict
 from os import path
 import re
 from scraping import get_college_football_rankings
@@ -30,9 +31,9 @@ def parse_game_data(game_str, extra_time):
     if game_tuple[0] == 'Rk' or game_tuple[0] == '' or game_tuple[-1] == 'Game Cancelled':
         return None
     if extra_time:
-        game_tuple = (game_tuple[6], game_tuple[7], game_tuple[9], game_tuple[10])
+        game_tuple = (game_tuple[6], game_tuple[7], game_tuple[9], game_tuple[10], game_tuple[1])
     else:
-        game_tuple = (game_tuple[5], game_tuple[6], game_tuple[8], game_tuple[9])
+        game_tuple = (game_tuple[5], game_tuple[6], game_tuple[8], game_tuple[9], game_tuple[1])
     win_team = remove_ranking(game_tuple[0])
     lose_team = remove_ranking(game_tuple[2])
 
@@ -45,7 +46,7 @@ def parse_game_data(game_str, extra_time):
     if lose_team in mislabeled.keys():
         lose_team = mislabeled[lose_team]
 
-    final = (win_team, game_tuple[1], lose_team, game_tuple[3])
+    final = (win_team, game_tuple[1], lose_team, game_tuple[3], int(game_tuple[4]))
     return final
 
 def parse_nfl_data(game_str):
@@ -53,6 +54,16 @@ def parse_nfl_data(game_str):
     # Convert the resulting list into a tuple
     game_tuple = tuple(data_fields)
     return game_tuple
+
+def split_postseason(games):
+    train = []
+    test = []
+    for game in games:
+        if game[-1] < 14:
+            train.append(game)
+        else:
+            test.append(game)
+    return train, test
 
 def split_rows(file_path):
     'NCAA/{year}.txt'
@@ -78,8 +89,7 @@ def split_rows(file_path):
             data = parse_game_data(row, extra_time)
             if data is not None:
                 games.append(data)
-        games.remove(games[-1])
-        return games, data
+        return games
     if league == 'NFL':
         for row in rows:
             data_fields = row.split(',')
@@ -153,11 +163,11 @@ def generate_data(file_path, verbose=False, filter = True):
     league = file_path[0:3]
     postseason = None
     if league == 'NCA':
-        games, championship = split_rows(file_path)
+        games = split_rows(file_path)
 
     elif league == 'NFL':
         filter = False
-        games, championship, postseason = split_rows(file_path)
+        games, postseason = split_rows(file_path)
 
     # a dictionary of game info
     # Key: team name
@@ -174,13 +184,17 @@ def generate_data(file_path, verbose=False, filter = True):
             games, team_games, records = filter_teams(games, team_games, records)
         if verbose:
             print(f"remaining teams post-filter: {tmp}")
+
+    if league == 'NCA':
+        games, postseason = split_postseason(games)
+
     # we have to remake our dictionary based on our shorter games array
     team_games = generate_dictionary(games)
-    # print(len(records))
+    records = generate_records(team_games)
 
-    return games, team_games, records, championship, postseason
+    return games, team_games, records, postseason
 
-def load_rankings_from_csv(file_name, length):
+def try_load_rankings_from_csv(file_name, length):
     rankings = {f"Method_{i+1}": [None] * length for i in range(7)}  # Assuming max rank 130
     with open(file_name, "r") as file:
         reader = csv.reader(file)
@@ -192,6 +206,43 @@ def load_rankings_from_csv(file_name, length):
             rankings[method][rank - 1] = team  # Index by rank (0-based)
     return [rankings[f"Method_{i+1}"] for i in range(7)]
 
+def load_rankings_from_csv(file_name):
+    """
+    Loads team rankings from a CSV file and returns a list of method-based rankings.
+    Automatically detects the maximum rank length.
+
+    Parameters:
+    - file_name (str): Path to the CSV file
+
+    Returns:
+    - list of lists: rankings for Method_1 through Method_7
+    """
+    rankings = defaultdict(dict)  # {method: {rank: team}}
+    max_rank = 0
+
+    with open(file_name, "r", newline='', encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header
+
+        for row in reader:
+            if len(row) < 4:
+                continue  # Skip invalid lines
+
+            year, method, rank, team = row
+            try:
+                rank = int(rank)
+                team = int(team)
+                rankings[method][rank - 1] = team
+                max_rank = max(max_rank, rank)
+            except ValueError:
+                continue  # Skip lines with invalid data
+
+    # Construct final list of lists, ordered by Method_1 to Method_7
+    return [
+        [rankings.get(f"Method_{i+1}", {}).get(r, None) for r in range(max_rank)]
+        for i in range(7)
+    ]
+
 def clean_team_name(raw_name):
     # This removes anything from the first "(" onward
     return re.sub(r"\s*\(.*?\)", "", raw_name).strip()
@@ -199,7 +250,7 @@ def clean_team_name(raw_name):
 def get_ap_rankings(year, records):
     if not path.exists(f"rankings/AP/{year}.txt"):
         get_college_football_rankings(year)
-    raw_teams = [line.strip().replace(' ', "") for line in open(f'rankings/AP/{year}.txt')]
+    raw_teams = [line.strip().replace(' ', "") for line in open(f'rankings/AP/Week_14/{year}.txt')]
     teams = [clean_team_name(team) for team in raw_teams]
     ranking_indices = []
     for team in teams:

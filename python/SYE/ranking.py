@@ -124,7 +124,7 @@ def generate_rankings(years, league):
             success = True
 
         if success:
-            games, team_games, records, championship, postseason = generate_data(f'{league}/{year}.txt')
+            games, team_games, records, postseason = generate_data(f'{league}/{year}.txt')
             # build the five matrices we 'need'
             results_matrix, weighted_results_matrix, score_matrix, weighted_score_matrix, raw_score_matrix, A_matrix = build_matrices(team_games, records)
 
