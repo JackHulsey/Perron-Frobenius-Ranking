@@ -94,24 +94,29 @@ def postseason_upsets(rankings, records, postseason):
     tmp = 0
     for ranking in rankings:
         team_names = {records[ranking[j]][0]: j for j in range(len(ranking))}
+        week = 14
+        discount = 1
         total = 0
         games_played = 0
         for game in postseason:
+            if game[-1] > week:
+                week = game[-1]
             if game[0] in team_names.keys() and game[2] not in team_names.keys() and game[1] <= game[3]:
                 games_played += 1
-                total += 1
+                total += discount
             if game[2] in team_names.keys() and game[0] not in team_names.keys() and game[3] <= game[1]:
                 games_played += 1
-                total += 1
+                total += discount
             if game[0] in team_names.keys() and game[2] in team_names.keys():
                 games_played += 1
                 if team_names[game[0]] < team_names[game[2]]:
-                    total += 1
+                    total += discount
         playoff_upsets[tmp] = total
         if games_played != 0:
-            playoff_upsets_ratio[tmp] = total / games_played
+            playoff_upsets_ratio[tmp] = total / len(postseason)
         else:
             playoff_upsets_ratio[tmp] = 1
+            playoff_upsets[tmp] = len(postseason)
         tmp += 1
     return playoff_upsets, playoff_upsets_ratio
 

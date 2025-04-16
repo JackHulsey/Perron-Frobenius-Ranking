@@ -58,8 +58,9 @@ def parse_nfl_data(game_str):
 def split_postseason(games):
     train = []
     test = []
+    max_weeks = games[-1][-1]
     for game in games:
-        if game[-1] < 14:
+        if game[-1] <= max_weeks-4:
             train.append(game)
         else:
             test.append(game)
@@ -100,7 +101,7 @@ def split_rows(file_path):
                     games.append(data[:4])
                 else:
                     postseason.append(data[:4])
-        return games, data, postseason
+        return games, postseason
 
 def generate_dictionary(games):
     # Create a dictionary to store each team's games
@@ -247,10 +248,10 @@ def clean_team_name(raw_name):
     # This removes anything from the first "(" onward
     return re.sub(r"\s*\(.*?\)", "", raw_name).strip()
 
-def get_ap_rankings(year, records):
-    if not path.exists(f"rankings/AP/{year}.txt"):
-        get_college_football_rankings(year)
-    raw_teams = [line.strip().replace(' ', "") for line in open(f'rankings/AP/Week_14/{year}.txt')]
+def get_ap_rankings(file_path, records):
+    if not path.exists(file_path):
+        return
+    raw_teams = [line.strip().replace(' ', "") for line in open(file_path)]
     teams = [clean_team_name(team) for team in raw_teams]
     ranking_indices = []
     for team in teams:

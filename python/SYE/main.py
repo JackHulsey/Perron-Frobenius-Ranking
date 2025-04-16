@@ -19,7 +19,8 @@ def main():
     # initalize NCAA
     league = 'NCAA'
     years = [1978 + i for i in range(47)]
-    years.remove(2020)
+    if 2020 in years:
+        years.remove(2020)
     num_rankings = 7
     ndcg_dict = {i:[] for i in range(num_rankings)}
     num_upsets = {i:[] for i in range(num_rankings+1)}
@@ -40,16 +41,22 @@ def main():
 
         if success:
             games, team_games, records, postseason = generate_data(f'{league}/{year}.txt')
-            ap_rankings, ap_indices = get_ap_rankings(year, records)
+
+            ap_rankings, ap_indices = get_ap_rankings(f'rankings/AP/Final/{year}.txt', records)
+            coach_rankings, coach_indices = get_ap_rankings(f'rankings/Coaches/{year}.txt', records)
+            print(len(ap_indices) == len(coach_indices))
+            print(len(ap_indices), len(coach_indices))
+            print(coach_indices[-1])
             rankings = load_rankings_from_csv(f'rankings/{league}/rankings_{year}.csv')
             shorter_rankings = [r[:len(ap_indices)] for r in rankings]
             ideal, ndcg = compare_rankings(ap_indices, shorter_rankings)
             upset = upsets(shorter_rankings, records, team_games, rankings, ap_indices)
             all_rankings = shorter_rankings
             all_rankings.append(ap_indices)
+            # all_rankings.append(coach_indices)
             playoff_upset, ratio = postseason_upsets(all_rankings, records, postseason)
             # comparison(shorter_rankings[0], shorter_rankings[1], shorter_rankings[2], shorter_rankings[3], shorter_rankings[4], shorter_rankings[5], ap_rankings, records)
-            for i in range(len(rankings)):
+            for i in range(num_rankings):
                 ndcg_dict[i].append(ndcg[i])
                 num_upsets[i].append(upset[i][0])
                 ratio_upsets[i].append(upset[i][1])
@@ -69,18 +76,24 @@ def main():
     print(f"AP_Polls | avg_ndcg: {1.0:<5} | avg_upsets: {round(np.average(num_upsets[num_rankings]), 2):<6} | avg_ratio: {round(np.average(ratio_upsets[num_rankings]), 4):<6} | Upsets Within top 25: {round(np.average(top_25_dict[num_rankings]), 3):<4} | Upsets Within top 25 ratio: {round(np.average(top_25_ratio[num_rankings]), 3)} | playoff upsets: {round(np.average(playoff_upsets[num_rankings]), 2)} | avg ratio: {round(np.average(playoff_ratio[num_rankings]), 2)} ")
     for i in range(len(ndcg_dict)):
         print(f"Method_{i+1} | avg_ndcg: {round(np.average(ndcg_dict[i]), 2):<5} | avg_upsets: {round(np.average(num_upsets[i]), 3):<6} | avg_ratio: {round(np.average(ratio_upsets[i]), 4):<4} | Upsets Within top 25: {round(np.average(top_25_dict[i]), 3)} | Upsets Within top 25 ratio: {round(np.average(top_25_ratio[i]), 4)} | playoff upsets: {round(np.average(playoff_upsets[i]), 2)} | avg ratio: {round(np.average(playoff_ratio[i]), 2)}")
+
+    del ndcg_dict[6]
+    del top_25_dict[6]
+    del top_25_ratio[6]
+    del playoff_upsets[6]
+    del playoff_ratio[6]
+    del num_upsets[6]
+
     plot_boxplot_upsets(num_upsets)
     plot_boxplot_upsets(top_25_dict, 'Top 25 Upsets')
     plot_boxplot_upsets(playoff_upsets)
-    plot_boxplot_upsets(playoff_ratio)
-    plot_upsets_per_year(playoff_upsets, years)
-    plot_upsets_per_year(playoff_ratio, years)
-    scatter_ndcg_vs_playoff_upsets_by_year('Method 4', ndcg_dict[3], playoff_upsets[3], years)
+    plot_boxplot_upsets(playoff_ratio, "Test Upset Ratio", "Proportion of Upsets")
+    scatter_ndcg_vs_playoff_upsets_by_year('Method 4', ndcg_dict[5], playoff_ratio[5], years)
     plot_grouped_bar_avg_ndcg_ratio(ndcg_dict, playoff_ratio)
     print(statistical(playoff_upsets))
     print(statistical(playoff_ratio))
     print(statistical(top_25_dict))
-
+    comparison(shorter_rankings[0], shorter_rankings[1], shorter_rankings[2], shorter_rankings[3], shorter_rankings[4], shorter_rankings[5], shorter_rankings[6], ap_rankings, records)
 
 def nfl():
     years = [1999 + i for i in range(1, 26)]
@@ -91,16 +104,18 @@ def nfl():
         if year == 2020:
             continue
 
-        games, team_games, records, champion, postseason = generate_data(f'NFL/{year}.txt')
-        rankings = load_rankings_from_csv(f'rankings/NFL/rankings_{year}.csv', len(records))
+        games, team_games, records, postseason = generate_data(f'NFL/{year}.txt')
+        rankings = load_rankings_from_csv(f'rankings/NFL/rankings_{year}.csv')
         playoff_upsets = playoffs(rankings, records, postseason)
         for i in range(len(rankings)):
             upsets_dict[i].append(playoff_upsets[i])
             print(f"Method_{i+1} | Playoff upsets: {playoff_upsets[i]:<2} | ratio: {round(playoff_upsets[i] / len(postseason), 4):<9}")
+        print(f"{year}")
     print(f"{years[0]}-{years[-1]}")
     for i in range(len(rankings)):
         print(f"Method_{i+1} | Playoff upsets: {round(np.average(upsets_dict[i]), 2)} | ratio: {round(np.average(playoff_upsets[i]) / len(postseason), 4):<9} ")
+    plot_boxplot_upsets(upsets_dict)
 
 if __name__ == '__main__':
-    main()
-    # nfl()
+    #main()
+    nfl()

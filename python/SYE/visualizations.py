@@ -16,10 +16,20 @@ def plot_boxplot_upsets(data_dict, title="Upset Distribution", ylabel="Number of
     """
     methods = sorted(data_dict.keys())
     data = [data_dict[i] for i in methods]
-    labels = ['Linear', 'Nonlinear', 'Least Squares', 'Maximum Likelihood', 'Tournaments', 'Modern', 'NFL Power', 'AP polls']
+    print(len(methods))
+    labels = ['Linear', 'Nonlinear', 'Least Squares', 'Maximum Likelihood', 'Tournaments', 'Modern', 'NFL Power']
 
     plt.figure(figsize=(12, 6))
-    plt.boxplot(data, labels=labels, patch_artist=True)
+    plt.boxplot(
+        data,
+        patch_artist=True,
+        labels=labels, # Needed to fill boxes with color
+        boxprops=dict(facecolor='#009CDE', color='black'),
+        capprops=dict(color='black'),
+        whiskerprops=dict(color='black'),
+        flierprops=dict(markerfacecolor='#009CDE', marker='o', color='black'),
+        medianprops=dict(color='black')
+    )
 
     plt.title(title)
     plt.xlabel("Ranking Method")

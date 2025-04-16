@@ -102,15 +102,18 @@ def convert(r, records):
         team_rankings.append(records[num][0])
     return team_rankings
 
-def comparison(r_1, r_2, r_3, r_4, r_5, r_6, r_ap, records):
+def comparison(r_1, r_2, r_3, r_4, r_5, r_6, r_7, r_ap, records):
     r_1 = convert(r_1, records)
     r_2 = convert(r_2, records)
     r_3 = convert(r_3, records)
     r_4 = convert(r_4, records)
     r_5 = convert(r_5, records)
     r_6 = convert(r_6, records)
+    r_7 = convert(r_7, records)
+
+    print(f"Rank AP Poll         Linear          Nonlinear       Least Square    MLE             Tournaments     Modern          NFL Power")
     for i in range(len(r_ap)):
-        print(f"{i+1:<4}: ap: {r_ap[i]:<15} 1: {r_1[i]:<15} 2: {r_2[i]:<15} 3: {r_3[i]:<15} 4: {r_4[i]:<15} 5: {r_5[i]:<15} 6: {r_6[i]:<15}")
+        print(f"{i+1:<4} {r_ap[i]:<15} {r_1[i]:<15} {r_2[i]:<15} {r_3[i]:<15} {r_4[i]:<15} {r_5[i]:<15} {r_6[i]:<15} {r_7[i]:<15}")
 
 def generate_rankings(years, league):
     for year in years:

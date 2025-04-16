@@ -99,7 +99,8 @@ def plot_grouped_bar_avg_ndcg_ratio(ndcg_dict, ratio_dict):
     """
     methods = list(ndcg_dict.keys())
     avg_ndcg = [np.mean(ndcg_dict[method]) for method in methods]
-    avg_ratio = [np.mean(ratio_dict[method]) for method in methods]
+    avg_ratio = [1-np.mean(ratio_dict[method]) for method in methods]
+    labels = ['Linear', 'Nonlinear', 'Least Squares', 'Maximum Likelihood', 'Tournaments', 'Modern']
 
     x = np.arange(len(methods))
     bar_width = 0.35
@@ -109,10 +110,48 @@ def plot_grouped_bar_avg_ndcg_ratio(ndcg_dict, ratio_dict):
     plt.bar(x + bar_width/2, avg_ratio, width=bar_width, label="Average Upset Ratio", color="salmon")
 
     plt.xlabel("Method")
-    plt.ylabel("Score")
-    plt.title("Average NDCG vs. Average Upset Ratio by Method")
-    plt.xticks(x, methods, rotation=45)
+    plt.ylabel("NDCG & Proportion of Games Correct")
+    plt.title("NDCG & Proportion of Games Correct")
+    plt.xticks(x, labels)
     plt.legend()
     plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
+
+import matplotlib.pyplot as plt
+import networkx as nx
+
+def draw_digraph_from_matrix(matrix, labels=None):
+    """
+    Generates a directed graph from an adjacency matrix.
+
+    Parameters:
+    - matrix (list of list or np.array): Adjacency matrix representing the digraph.
+    - labels (list, optional): Labels for the nodes. Defaults to numeric indices.
+    """
+    G = nx.DiGraph()
+
+    n = len(matrix)
+    if labels is None:
+        labels = list(range(n))
+
+    # Add nodes
+    for i in range(n):
+        G.add_node(labels[i])
+
+    # Add edges
+    for i in range(n):
+        for j in range(n):
+            if matrix[i][j] != 0:
+                G.add_edge(labels[i], labels[j], weight=matrix[i][j])
+
+    pos = nx.spring_layout(G, seed=42)  # consistent layout
+    edge_labels = nx.get_edge_attributes(G, 'weight')
+
+    plt.figure(figsize=(8, 6))
+    nx.draw(G, pos, with_labels=True, arrows=True, node_color="lightblue", edge_color="gray", node_size=1500, font_size=10)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color="red")
+    plt.title("Directed Graph from Adjacency Matrix")
+    plt.axis("off")
     plt.tight_layout()
     plt.show()
