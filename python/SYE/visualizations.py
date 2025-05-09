@@ -31,8 +31,6 @@ def plot_boxplot_upsets(data_dict, title="Upset Distribution", ylabel="Number of
         medianprops=dict(color='black')
     )
 
-    plt.title(title)
-    plt.xlabel("Ranking Method")
     plt.ylabel(ylabel)
     plt.grid(True, axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()

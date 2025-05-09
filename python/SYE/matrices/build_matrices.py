@@ -17,6 +17,7 @@ def make_results_matrix(team_games, records):
             if i == j:
                 matrix[i][j] = 0  # A team doesn't play against itself
             else:
+                # replace match_result() with any other function from calculate_entries.py
                 matrix[i][j] = match_result(team_games, records[i][0], records[j][0])
     return matrix
 

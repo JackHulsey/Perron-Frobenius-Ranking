@@ -33,6 +33,7 @@ def ndcg(r_ap, ranking):  # Convert AP rankings to numpy array
 
 def compare_rankings(r_ap, rankings):
     ideal = ndcg(r_ap, r_ap)  # Ideal NCTG score (when ranking is perfect)
+    print(ideal)
     ndcg_scores = [ndcg(r_ap, r) / ideal for r in rankings]
 
     return ideal, ndcg_scores

@@ -162,4 +162,4 @@ def get_college_football_rankings(year: int):
         for team in teams:
             file.write(f"{team}\n")
 
-    print(f"Team names have been successfully saved to 'rankings/Coaches/{year}.txt'.")
+    print(f"Team names have been successfully saved to 'rankings/AP/{year}.txt'.")

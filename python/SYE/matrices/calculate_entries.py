@@ -44,7 +44,7 @@ def raw_match_score(team_games, team_i, team_j):
         return int(game[3])
     return 0
 
-# helper functions to make 2.4 in the paper
+# helper functions
 def h(x):
   result = 0.5 + 0.5*np.sign(x - 0.5)*np.sqrt(abs(2*x -1))
   return result

@@ -99,7 +99,7 @@ def plot_grouped_bar_avg_ndcg_ratio(ndcg_dict, ratio_dict):
     """
     methods = list(ndcg_dict.keys())
     avg_ndcg = [np.mean(ndcg_dict[method]) for method in methods]
-    avg_ratio = [1-np.mean(ratio_dict[method]) for method in methods]
+    avg_ratio = [np.mean(ratio_dict[method]) for method in methods]
     labels = ['Linear', 'Nonlinear', 'Least Squares', 'Maximum Likelihood', 'Tournaments', 'Modern']
 
     x = np.arange(len(methods))
@@ -109,7 +109,6 @@ def plot_grouped_bar_avg_ndcg_ratio(ndcg_dict, ratio_dict):
     plt.bar(x - bar_width/2, avg_ndcg, width=bar_width, label="Average NDCG", color="skyblue")
     plt.bar(x + bar_width/2, avg_ratio, width=bar_width, label="Average Upset Ratio", color="salmon")
 
-    plt.xlabel("Method")
     plt.ylabel("NDCG & Proportion of Games Correct")
     plt.title("NDCG & Proportion of Games Correct")
     plt.xticks(x, labels)
